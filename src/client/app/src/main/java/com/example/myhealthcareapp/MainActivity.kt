@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.myhealthcareapp.login.LoginFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import com.example.myhealthcareapp.register.RegisterFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
