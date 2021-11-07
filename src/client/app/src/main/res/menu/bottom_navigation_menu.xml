@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/make_appointment"
+        android:enabled="true"
+        android:icon="@drawable/ic_medical_services"
+        android:title="@string/make_appointment"/>
+    <item
+        android:id="@+id/feedback"
+        android:enabled="true"
+        android:icon="@drawable/ic_feedback"
+        android:title="@string/feedback"/>
+    <item
+        android:id="@+id/my_appointments"
+        android:enabled="true"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/my_appointments"/>
+</menu>
