@@ -18,11 +18,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="70dp"
         android:layout_marginBottom="20dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:background="@color/colorAppBlack"
+        android:background="@drawable/rounded_layout_bg"
         android:gravity="center_horizontal">
 
         <TextView
@@ -31,19 +31,20 @@
             android:text="@string/log_in"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:layout_marginStart="-100dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="-120dp"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="20dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_text_view_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
             android:textColorHint="@color/colorHintText"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:errorEnabled="true"
             android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            >
+            android:layout_marginEnd="30dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_text_view"
@@ -55,15 +56,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_text_view_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
             app:endIconMode="password_toggle"
             android:textColorHint="@color/colorHintText"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:errorEnabled="true"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="5dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_text_view"
@@ -80,7 +83,7 @@
             android:layout_width="250dp"
             android:layout_height="42dp"
             android:text="@string/log_in"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             style="@style/Widget.MaterialComponents.Button"
             app:cornerRadius="15dp"
             android:textColor="@color/black"
@@ -89,7 +92,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -111,7 +114,10 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorHintText"
-            android:layout_margin="40dp"/>
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -130,6 +136,14 @@
             app:cornerRadius="15dp"
             android:textColor="@color/white"
             />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            android:layout_marginTop="15dp"/>
 
     </LinearLayout>
 
