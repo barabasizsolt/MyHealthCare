@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+    //Firebase dependency
+
     //Coil dependency
     implementation "io.coil-kt:coil:1.2.0"
     implementation "io.coil-kt:coil-svg:1.2.0"
