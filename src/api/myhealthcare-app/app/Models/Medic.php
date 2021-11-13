@@ -4,19 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\MedicalDepartment;
 
-class Hospital extends Model
+class Medic extends Model
 {
     use HasFactory;
-
+    
     protected $fillable = [
         'name',
         'contact',
-        'description',
-        'address',
-        'longitude_coordinate',
-        'latitude_coordinate'
+        'hired_date'
     ];
 
     protected $dates = [
@@ -24,7 +20,7 @@ class Hospital extends Model
         'updated_at',
     ];
 
-    public function medical_departments(){
-        return $this->hasMany(MedicalDepartment::class);
+    public function medicalDepartments(){
+        return $this->belongsToMany(MedicalDepartment::class, 'medical_department_medic');
     }
 }

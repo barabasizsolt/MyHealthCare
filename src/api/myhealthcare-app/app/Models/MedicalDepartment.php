@@ -16,7 +16,16 @@ class MedicalDepartment extends Model
         'contact'
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function hospital(){
         return $this->belongsTo(Hospital::class);
+    }
+
+    public function medics(){
+        return $this->belongsToMany(Medic::class, 'medical_department_medic');
     }
 }
