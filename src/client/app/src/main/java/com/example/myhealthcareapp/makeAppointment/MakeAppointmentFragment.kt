@@ -79,7 +79,7 @@ class MakeAppointmentFragment : Fragment() {
         val list : MutableList<Hospital> = mutableListOf()
         for (i in 0 until size) {
 
-            val item = Hospital(i,"Hospital$i","0123456789","asdf","asdf","asdf","asdf")
+            val item = Hospital(i,"Hospital$i","0123456789","asdf","Kukutyinfalva","asdf","asdf")
             list += item
         }
 
