@@ -15,12 +15,14 @@ import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.HospitalRecyclerViewAdapter
 import com.example.myhealthcareapp.cache.Cache
+import com.example.myhealthcareapp.constants.Constant.HospitalId
 import com.example.myhealthcareapp.models.Hospital
 import com.example.myhealthcareapp.models.user.Client
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MakeAppointmentFragment : Fragment() {
+class MakeAppointmentFragment : Fragment(), HospitalRecyclerViewAdapter.OnItemClickListener {
     private lateinit var button: Button
+    private lateinit var exampleList: MutableList<Hospital>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,9 +61,9 @@ class MakeAppointmentFragment : Fragment() {
         (activity as MainActivity).topAppBar.menu[1].isVisible = true
         (activity as MainActivity).topAppBar.menu[2].isVisible = true
 
-        val exampleList = generateDummyList(20)
+        exampleList = generateDummyList(20)
         val recyclerview = view.findViewById<RecyclerView>(R.id.recycler_view)
-        recyclerview.adapter = HospitalRecyclerViewAdapter(exampleList)
+        recyclerview.adapter = HospitalRecyclerViewAdapter(exampleList, this)
         recyclerview.layoutManager = LinearLayoutManager(context)
         recyclerview.setHasFixedSize(true)
     }
@@ -81,5 +83,15 @@ class MakeAppointmentFragment : Fragment() {
         }
 
         return list
+    }
+
+    override fun onItemClick(position: Int) {
+
+        val bundle = Bundle()
+        bundle.putString(HospitalId, exampleList[position].hospitalId.toString())
+        val fragment = DepartmentListFragment()
+        fragment.arguments = bundle
+
+        (activity as MainActivity).replaceFragment(fragment,R.id.fragment_container, true)
     }
 }
