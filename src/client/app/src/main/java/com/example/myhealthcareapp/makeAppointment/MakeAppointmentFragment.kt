@@ -57,6 +57,7 @@ class MakeAppointmentFragment : Fragment(), HospitalRecyclerViewAdapter.OnItemCl
 
     private fun setupUI(view: View){
         (activity as MainActivity).bottomNavigation.visibility = View.VISIBLE
+        (activity as MainActivity).topAppBar.title = getString(R.string.app_bar_title)
         (activity as MainActivity).topAppBar.menu[0].isVisible = true
         (activity as MainActivity).topAppBar.menu[1].isVisible = true
         (activity as MainActivity).topAppBar.menu[2].isVisible = true

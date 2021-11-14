@@ -39,4 +39,5 @@
     <string name="save_changes">Save Changes</string>
     <string name="cnp_error">Invalid Personal Code</string>
     <string name="log_out">Log Out</string>
+    <string name="profile_title">My Profile</string>
 </resources>

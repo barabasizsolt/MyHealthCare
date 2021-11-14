@@ -12,6 +12,7 @@ import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.login.LoginFragment
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.activity_main.*
 
 class ForgotPasswordFragment : Fragment() {
     private lateinit var email: TextView
@@ -27,6 +28,8 @@ class ForgotPasswordFragment : Fragment() {
         email = view.findViewById(R.id.email_text_view)
         emailLayout = view.findViewById(R.id.email_text_layout)
         resetButton = view.findViewById(R.id.email_me)
+
+        (activity as MainActivity).topAppBar.title = getString(R.string.reset_password)
 
         return view
     }
