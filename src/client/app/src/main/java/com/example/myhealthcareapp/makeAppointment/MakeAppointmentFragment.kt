@@ -8,12 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
+import com.example.myhealthcareapp.adapters.HospitalRecyclerViewAdapter
 import com.example.myhealthcareapp.cache.Cache
 import com.example.myhealthcareapp.login.LoginFragment
+import com.example.myhealthcareapp.models.Hospital
 import com.example.myhealthcareapp.models.user.Client
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_make_appointment.*
 
 class MakeAppointmentFragment : Fragment() {
     private lateinit var button: Button
@@ -52,12 +57,32 @@ class MakeAppointmentFragment : Fragment() {
     private fun setupUI(view: View){
         (activity as MainActivity).bottomNavigation.visibility = View.VISIBLE
 
-        button = view.findViewById(R.id.button)
-        button.setOnClickListener {
-            (activity as MainActivity).mAuth.signOut()
-            (activity as MainActivity).topAppBar.visibility = View.GONE
-            (activity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
-            (activity as MainActivity).bottomNavigation.visibility = View.GONE
+//        button = view.findViewById(R.id.button)
+//        button.setOnClickListener {
+//            (activity as MainActivity).mAuth.signOut()
+//            (activity as MainActivity).topAppBar.visibility = View.GONE
+//            (activity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
+//            (activity as MainActivity).bottomNavigation.visibility = View.GONE
+//        }
+
+        //recycler view stuff
+        val exampleList = generateDummyList(20)
+
+        val recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recycler_view.adapter = HospitalRecyclerViewAdapter(exampleList)
+        recycler_view.layoutManager = LinearLayoutManager(context)
+        recycler_view.setHasFixedSize(true)
+    }
+
+    private fun generateDummyList(size: Int): MutableList<Hospital> {
+
+        val list : MutableList<Hospital> = mutableListOf()
+        for (i in 0 until size) {
+
+            val item = Hospital(i,"Hospital$i","0123456789","asdf","asdf","asdf","asdf")
+            list += item
         }
+
+        return list
     }
 }

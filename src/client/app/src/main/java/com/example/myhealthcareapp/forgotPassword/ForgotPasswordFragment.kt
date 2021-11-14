@@ -11,7 +11,6 @@ import android.widget.Toast
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.login.LoginFragment
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputLayout
 
 class ForgotPasswordFragment : Fragment() {
