@@ -13,17 +13,21 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
+import com.example.myhealthcareapp.constants.Constant
 import com.example.myhealthcareapp.makeAppointment.MakeAppointmentFragment
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.activity_main.*
 
 class RegisterFragment : Fragment() {
     private lateinit var firstName: TextView
     private lateinit var lastName: TextView
     private lateinit var email: TextView
+    private lateinit var personalCode: TextView
     private lateinit var password: TextView
     private lateinit var firstNameLayout: TextInputLayout
     private lateinit var lastNameLayout: TextInputLayout
     private lateinit var emailLayout: TextInputLayout
+    private lateinit var personalCodeLayout: TextInputLayout
     private lateinit var passwordLayout: TextInputLayout
     private lateinit var registerButton: Button
     private lateinit var loginTextView: TextView
@@ -38,10 +42,12 @@ class RegisterFragment : Fragment() {
         firstName = view.findViewById(R.id.first_name)
         lastName = view.findViewById(R.id.last_name)
         email = view.findViewById(R.id.email)
+        personalCode = view.findViewById(R.id.personal_code)
         password = view.findViewById(R.id.password)
         firstNameLayout = view.findViewById(R.id.first_name_layout)
         lastNameLayout = view.findViewById(R.id.last_name_layout)
         emailLayout = view.findViewById(R.id.email_layout)
+        personalCodeLayout = view.findViewById(R.id.personal_code_layout)
         passwordLayout = view.findViewById(R.id.password_layout)
         registerButton = view.findViewById(R.id.register_button)
         loginTextView = view.findViewById(R.id.log_in)
@@ -59,7 +65,8 @@ class RegisterFragment : Fragment() {
 
                 val user = hashMapOf(
                     "firstName" to firstName.text.toString(),
-                    "lastName" to lastName.text.toString()
+                    "lastName" to lastName.text.toString(),
+                    "personalCode" to personalCode.text.toString()
                 )
 
                 (activity as MainActivity).mAuth
@@ -68,9 +75,10 @@ class RegisterFragment : Fragment() {
                         requireActivity()
                     ) { task ->
                         if (task.isSuccessful) {
-                            (activity as MainActivity).firestore.collection("users").document(email.text.toString()).set(user)
+                            (activity as MainActivity).fireStore.collection("users").document(email.text.toString()).set(user)
                                 .addOnSuccessListener {
                                     Toast.makeText(requireActivity(), "Successfully Registered", Toast.LENGTH_LONG).show()
+                                    (activity as MainActivity).topAppBar.visibility = View.VISIBLE
                                     (activity as MainActivity).replaceFragment(MakeAppointmentFragment(), R.id.fragment_container)
                                 }
                                 .addOnFailureListener { e ->
@@ -106,6 +114,14 @@ class RegisterFragment : Fragment() {
             }
             email.text.toString().isEmpty() -> {
                 emailLayout.error = getString(R.string.error)
+                return false
+            }
+            personalCode.text.toString().isEmpty() -> {
+                personalCodeLayout.error = getString(R.string.error)
+                return false
+            }
+            !personalCode.text.matches(Regex(Constant.CNP_REGEX)) -> {
+                personalCodeLayout.error = getString(R.string.cnp_error)
                 return false
             }
             password.text.toString().isEmpty() -> {
