@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.hospital_recyclerview_element.view.*
 
 class HospitalRecyclerViewAdapter(private val hospitalList : MutableList<Hospital>, private val listener : OnItemClickListener)  : RecyclerView.Adapter<HospitalRecyclerViewAdapter.HospitalRecyclerViewViewHolder>() {
 
-
     inner class HospitalRecyclerViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val hospitalImage : ImageView = itemView.hospital_image
         val hospitalName : TextView = itemView.hospital_name
@@ -29,15 +28,12 @@ class HospitalRecyclerViewAdapter(private val hospitalList : MutableList<Hospita
             if( position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(position)
             }
-
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HospitalRecyclerViewViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.make_appointment_recyclerview_element,parent,false)
-        val holder = HospitalRecyclerViewViewHolder(itemView)
-
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.hospital_recyclerview_element,parent,false)
         return HospitalRecyclerViewViewHolder(itemView)
     }
 
