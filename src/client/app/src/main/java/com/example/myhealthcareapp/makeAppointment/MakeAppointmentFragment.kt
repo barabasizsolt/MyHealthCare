@@ -29,14 +29,6 @@ class MakeAppointmentFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_make_appointment, container, false)
 
-        val exampleList = generateDummyList(20)
-
-        val recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
-        recycler_view.adapter = HospitalRecyclerViewAdapter(exampleList)
-        recycler_view.layoutManager = LinearLayoutManager(context)
-        recycler_view.setHasFixedSize(true)
-
-        return view
         val email = (activity as MainActivity).mAuth.currentUser!!.email!!
         (activity as MainActivity).fireStore.collection("users").document(email).get()
             .addOnSuccessListener { document ->
@@ -65,13 +57,21 @@ class MakeAppointmentFragment : Fragment() {
     private fun setupUI(view: View){
         (activity as MainActivity).bottomNavigation.visibility = View.VISIBLE
 
-        button = view.findViewById(R.id.button)
-        button.setOnClickListener {
-            (activity as MainActivity).mAuth.signOut()
-            (activity as MainActivity).topAppBar.visibility = View.GONE
-            (activity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
-            (activity as MainActivity).bottomNavigation.visibility = View.GONE
-        }
+//        button = view.findViewById(R.id.button)
+//        button.setOnClickListener {
+//            (activity as MainActivity).mAuth.signOut()
+//            (activity as MainActivity).topAppBar.visibility = View.GONE
+//            (activity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
+//            (activity as MainActivity).bottomNavigation.visibility = View.GONE
+//        }
+
+        //recycler view stuff
+        val exampleList = generateDummyList(20)
+
+        val recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recycler_view.adapter = HospitalRecyclerViewAdapter(exampleList)
+        recycler_view.layoutManager = LinearLayoutManager(context)
+        recycler_view.setHasFixedSize(true)
     }
 
     private fun generateDummyList(size: Int): MutableList<Hospital> {
