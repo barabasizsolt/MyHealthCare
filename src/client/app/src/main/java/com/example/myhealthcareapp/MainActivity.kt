@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         fireStore = Firebase.firestore
         bottomNavigation.visibility = View.GONE
 
+        initBottomNavigation()
         initTopBar()
 
         if(mAuth.currentUser == null){
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener {item ->
             when(item.itemId) {
                 R.id.make_appointment -> {
-                    //TODO: implement it
+                    replaceFragment(MakeAppointmentFragment(), R.id.fragment_container)
                     true
                 }
                 R.id.feedback -> {
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.profile -> {
-                    replaceFragment(ProfileFragment(), R.id.fragment_container, true)
+                    replaceFragment(ProfileFragment(), R.id.fragment_container)
                     true
                 }
                 else -> false
