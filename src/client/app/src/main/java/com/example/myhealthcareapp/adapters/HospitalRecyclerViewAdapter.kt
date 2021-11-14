@@ -3,7 +3,6 @@ package com.example.myhealthcareapp.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -22,11 +21,14 @@ class HospitalRecyclerViewAdapter(private val hospitalList : MutableList<Hospita
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HospitalRecyclerViewViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.make_appointment_recyclerview_element,parent,false)
-        val holder = HospitalRecyclerViewViewHolder(itemView)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): HospitalRecyclerViewViewHolder {
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.make_appointment_recyclerview_element, parent, false)
 
-        return holder
+        return HospitalRecyclerViewViewHolder(itemView)
     }
 
 
@@ -36,6 +38,7 @@ class HospitalRecyclerViewAdapter(private val hospitalList : MutableList<Hospita
         Glide.with(holder.itemView.context)
             .load(R.drawable.hospital_icon)
             .into(holder.hospitalImage)
+
 
         holder.hospitalName.text = currentHospital.hospitalName
         holder.hospitalPhoneNumber.text = currentHospital.hospitalPhoneNumber
