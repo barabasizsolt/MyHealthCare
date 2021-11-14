@@ -24,4 +24,18 @@
     <string name="forgot_password_text">We will sen you an email with instructions on how to reset your password</string>
     <string name="email_me">EMAIL ME</string>
     <string name="error">Field is required</string>
+    <string name="app_bar_title">Make Appointment</string>
+    <string name="search">Search</string>
+    <string name="content_description_search">Search Icon</string>
+    <string name="filter">Filter</string>
+    <string name="content_description_more">Filter icon</string>
+    <string name="profile">profile</string>
+    <string name="content_description_profile">Profile icon</string>
+    <string name="content_description_filter">Filter icon</string>
+    <string name="registration_date">Registration date</string>
+    <string name="client_photo">Client Photo</string>
+    <string name="personal_code">Personal Code</string>
+    <string name="reset_password">Reset password?</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="cnp_error">Invalid Personal Code</string>
 </resources>
