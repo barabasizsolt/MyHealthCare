@@ -72,8 +72,13 @@ class MakeAppointmentFragment : Fragment(), HospitalRecyclerViewAdapter.OnItemCl
 
         val list : MutableList<Hospital> = mutableListOf()
         for (i in 0 until size) {
-
-            val item = Hospital(i,"Hospital$i","0123456789","asdf","Kukutyinfalva","asdf","asdf")
+            val item = Hospital(i,"Policlinica 2",
+                "0744077777",
+                "asdf",
+                "Bulevardul 1 Decembrie 1918, Târgu Mureș 540011",
+                "asdf",
+                "asdf"
+            )
             list += item
         }
 
