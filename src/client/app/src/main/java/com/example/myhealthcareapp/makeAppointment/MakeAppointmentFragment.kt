@@ -8,17 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.HospitalRecyclerViewAdapter
 import com.example.myhealthcareapp.cache.Cache
-import com.example.myhealthcareapp.login.LoginFragment
 import com.example.myhealthcareapp.models.Hospital
 import com.example.myhealthcareapp.models.user.Client
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_make_appointment.*
 
 class MakeAppointmentFragment : Fragment() {
     private lateinit var button: Button
@@ -56,22 +55,15 @@ class MakeAppointmentFragment : Fragment() {
 
     private fun setupUI(view: View){
         (activity as MainActivity).bottomNavigation.visibility = View.VISIBLE
+        (activity as MainActivity).topAppBar.menu[0].isVisible = true
+        (activity as MainActivity).topAppBar.menu[1].isVisible = true
+        (activity as MainActivity).topAppBar.menu[2].isVisible = true
 
-//        button = view.findViewById(R.id.button)
-//        button.setOnClickListener {
-//            (activity as MainActivity).mAuth.signOut()
-//            (activity as MainActivity).topAppBar.visibility = View.GONE
-//            (activity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
-//            (activity as MainActivity).bottomNavigation.visibility = View.GONE
-//        }
-
-        //recycler view stuff
         val exampleList = generateDummyList(20)
-
-        val recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
-        recycler_view.adapter = HospitalRecyclerViewAdapter(exampleList)
-        recycler_view.layoutManager = LinearLayoutManager(context)
-        recycler_view.setHasFixedSize(true)
+        val recyclerview = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerview.adapter = HospitalRecyclerViewAdapter(exampleList)
+        recyclerview.layoutManager = LinearLayoutManager(context)
+        recyclerview.setHasFixedSize(true)
     }
 
     private fun generateDummyList(size: Int): MutableList<Hospital> {
