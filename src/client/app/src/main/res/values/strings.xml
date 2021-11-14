@@ -35,7 +35,7 @@
     <string name="registration_date">Registration date</string>
     <string name="client_photo">Client Photo</string>
     <string name="personal_code">Personal Code</string>
-    <string name="reset_password">Reset password?</string>
+    <string name="reset_password">Reset password</string>
     <string name="save_changes">Save Changes</string>
     <string name="cnp_error">Invalid Personal Code</string>
     <string name="log_out">Log Out</string>

@@ -11,6 +11,7 @@ import androidx.core.view.get
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.cache.Cache
+import com.example.myhealthcareapp.forgotPassword.ForgotPasswordFragment
 import com.example.myhealthcareapp.login.LoginFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
@@ -58,6 +59,9 @@ class ProfileFragment : Fragment() {
             (activity as MainActivity).topAppBar.visibility = View.GONE
             (activity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
             (activity as MainActivity).bottomNavigation.visibility = View.GONE
+        }
+        resetPassword.setOnClickListener {
+            (activity as MainActivity).replaceFragment(ForgotPasswordFragment(), R.id.fragment_container, true)
         }
     }
 
