@@ -16,11 +16,12 @@ import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.HospitalRecyclerViewAdapter
 import com.example.myhealthcareapp.cache.Cache
 import com.example.myhealthcareapp.constants.Constant.HospitalId
+import com.example.myhealthcareapp.constants.Constant.HospitalIdString
 import com.example.myhealthcareapp.models.Hospital
 import com.example.myhealthcareapp.models.user.Client
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MakeAppointmentFragment : Fragment(), HospitalRecyclerViewAdapter.OnItemClickListener {
+class HospitalListFragment : Fragment(), HospitalRecyclerViewAdapter.OnItemClickListener {
     private lateinit var button: Button
     private lateinit var exampleList: MutableList<Hospital>
 
@@ -28,7 +29,7 @@ class MakeAppointmentFragment : Fragment(), HospitalRecyclerViewAdapter.OnItemCl
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_make_appointment, container, false)
+        val view = inflater.inflate(R.layout.fragment_hospital_list, container, false)
 
         val email = (activity as MainActivity).mAuth.currentUser!!.email!!
         (activity as MainActivity).fireStore.collection("users").document(email).get()
@@ -74,8 +75,8 @@ class MakeAppointmentFragment : Fragment(), HospitalRecyclerViewAdapter.OnItemCl
         for (i in 0 until size) {
             val item = Hospital(i,"Policlinica 2",
                 "0744077777",
-                "asdf",
                 "Bulevardul 1 Decembrie 1918, Târgu Mureș 540011",
+                "asdf",
                 "asdf",
                 "asdf"
             )
@@ -88,8 +89,9 @@ class MakeAppointmentFragment : Fragment(), HospitalRecyclerViewAdapter.OnItemCl
     override fun onItemClick(position: Int) {
 
         val bundle = Bundle()
-        bundle.putString(HospitalId, exampleList[position].hospitalId.toString())
-        val fragment = DepartmentListFragment()
+        bundle.putString(HospitalIdString, exampleList[position].hospitalId.toString())
+        bundle.putInt(HospitalId,exampleList[position].hospitalId)
+        val fragment = MedicalDepartmentListFragment()
         fragment.arguments = bundle
 
         (activity as MainActivity).replaceFragment(fragment,R.id.fragment_container, true)
