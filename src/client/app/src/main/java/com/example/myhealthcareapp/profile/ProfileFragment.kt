@@ -11,11 +11,10 @@ import androidx.core.view.get
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.cache.Cache
+import com.example.myhealthcareapp.constants.Constant.getDate
 import com.example.myhealthcareapp.forgotPassword.ForgotPasswordFragment
 import com.example.myhealthcareapp.login.LoginFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ProfileFragment : Fragment() {
     private lateinit var clientFirstName: TextView
@@ -64,10 +63,5 @@ class ProfileFragment : Fragment() {
         resetPassword.setOnClickListener {
             (activity as MainActivity).replaceFragment(ForgotPasswordFragment(), R.id.fragment_container, true)
         }
-    }
-
-    private fun getDate(timeStamp: Long): String? {
-        val formatter = SimpleDateFormat("MMM dd, yyy", Locale.getDefault())
-        return formatter.format(timeStamp)
     }
 }
