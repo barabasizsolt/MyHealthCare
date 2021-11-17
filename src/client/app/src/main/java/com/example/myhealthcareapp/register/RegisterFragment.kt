@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.constants.Constant
+import com.example.myhealthcareapp.makeAppointment.HospitalListFragment
 import com.example.myhealthcareapp.login.LoginFragment
 import com.example.myhealthcareapp.makeAppointment.MakeAppointmentFragment
 import com.google.android.material.textfield.TextInputLayout
@@ -80,7 +81,7 @@ class RegisterFragment : Fragment() {
                                 .addOnSuccessListener {
                                     Toast.makeText(requireActivity(), "Successfully Registered", Toast.LENGTH_LONG).show()
                                     (activity as MainActivity).topAppBar.visibility = View.VISIBLE
-                                    (activity as MainActivity).replaceFragment(MakeAppointmentFragment(), R.id.fragment_container)
+                                    (activity as MainActivity).replaceFragment(HospitalListFragment(), R.id.fragment_container)
                                 }
                                 .addOnFailureListener { e ->
                                     Log.w(TAG, "Some error occurred during registration", e)

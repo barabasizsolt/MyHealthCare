@@ -1,15 +1,11 @@
 package com.example.myhealthcareapp
 
-import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.example.myhealthcareapp.cache.Cache
 import com.example.myhealthcareapp.login.LoginFragment
-import com.example.myhealthcareapp.makeAppointment.MakeAppointmentFragment
-import com.example.myhealthcareapp.models.user.Client
+import com.example.myhealthcareapp.makeAppointment.HospitalListFragment
 import com.example.myhealthcareapp.profile.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -37,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(LoginFragment(), R.id.fragment_container)
         }
         else{
-            replaceFragment(MakeAppointmentFragment(), R.id.fragment_container)
+            replaceFragment(HospitalListFragment(), R.id.fragment_container)
         }
     }
 
@@ -56,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener {item ->
             when(item.itemId) {
                 R.id.make_appointment -> {
-                    replaceFragment(MakeAppointmentFragment(), R.id.fragment_container)
+                    replaceFragment(HospitalListFragment(), R.id.fragment_container)
                     true
                 }
                 R.id.feedback -> {

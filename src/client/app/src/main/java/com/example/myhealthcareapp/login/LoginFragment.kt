@@ -12,7 +12,7 @@ import android.widget.Toast
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.forgotPassword.ForgotPasswordFragment
-import com.example.myhealthcareapp.makeAppointment.MakeAppointmentFragment
+import com.example.myhealthcareapp.makeAppointment.HospitalListFragment
 import com.example.myhealthcareapp.register.RegisterFragment
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
@@ -60,7 +60,7 @@ class LoginFragment : Fragment() {
                         if (task.isSuccessful) {
                             Toast.makeText(requireActivity(), "Successfully logged in", Toast.LENGTH_LONG).show()
                             (activity as MainActivity).topAppBar.visibility = View.VISIBLE
-                            (activity as MainActivity).replaceFragment(MakeAppointmentFragment(), R.id.fragment_container)
+                            (activity as MainActivity).replaceFragment(HospitalListFragment(), R.id.fragment_container)
                         } else {
                             Toast.makeText(requireActivity(), "Incorrect email or password", Toast.LENGTH_LONG).show()
                         }
