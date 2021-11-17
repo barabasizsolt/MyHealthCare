@@ -17,11 +17,12 @@ import com.example.myhealthcareapp.adapters.HospitalRecyclerViewAdapter
 import com.example.myhealthcareapp.cache.Cache
 import com.example.myhealthcareapp.constants.Constant.HospitalId
 import com.example.myhealthcareapp.constants.Constant.HospitalIdString
+import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.Hospital
 import com.example.myhealthcareapp.models.user.Client
 import kotlinx.android.synthetic.main.activity_main.*
 
-class HospitalListFragment : Fragment(), HospitalRecyclerViewAdapter.OnItemClickListener {
+class HospitalListFragment : Fragment(), OnItemClickListener {
     private lateinit var button: Button
     private lateinit var exampleList: MutableList<Hospital>
 

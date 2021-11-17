@@ -16,7 +16,6 @@ import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.constants.Constant
 import com.example.myhealthcareapp.makeAppointment.HospitalListFragment
 import com.example.myhealthcareapp.login.LoginFragment
-import com.example.myhealthcareapp.makeAppointment.MakeAppointmentFragment
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 

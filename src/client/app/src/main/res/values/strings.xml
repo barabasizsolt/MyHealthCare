@@ -40,4 +40,8 @@
     <string name="cnp_error">Invalid Personal Code</string>
     <string name="log_out">Log Out</string>
     <string name="profile_title">My Profile</string>
+    <string name="selected_hospital">Selected Hospital</string>
+    <string name="selected_department">Selected Department</string>
+    <string name="selected_day">Appointment date</string>
+    <string name="selected_time">Appointment time</string>
 </resources>
