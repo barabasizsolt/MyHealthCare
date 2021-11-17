@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".makeAppointment.MakeAppointmentFragment"
+    tools:context=".makeAppointment.MedicalDepartmentListFragment"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/colorPrimary">
@@ -16,7 +16,7 @@
         android:clipToPadding="false"
         android:layout_marginTop="60dp"
         android:padding="4dp"
-        tools:listitem="@layout/hospital_recyclerview_element" />
+        tools:listitem="@layout/medical_department_recyclerview_element" />
 
 
 </LinearLayout>
