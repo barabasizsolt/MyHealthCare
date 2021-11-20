@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class Feedback extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'address',
-        'email',
-        'password'
+        'message',
+        'billing'
     ];
 
     protected $dates = [
@@ -21,7 +19,7 @@ class Client extends Model
         'updated_at',
     ];
 
-    public function appointments(){
-        return $this->hasMany(Appointment::class);
+    public function appointment(){
+        return $this->belongsTo(Appointment::class);
     }
 }
