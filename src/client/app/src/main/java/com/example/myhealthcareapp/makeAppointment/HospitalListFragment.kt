@@ -7,8 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.SearchView
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.MainActivity
@@ -17,16 +18,13 @@ import com.example.myhealthcareapp.adapters.HospitalRecyclerViewAdapter
 import com.example.myhealthcareapp.cache.Cache
 import com.example.myhealthcareapp.constants.Constant.HospitalId
 import com.example.myhealthcareapp.constants.Constant.HospitalIdString
+import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.Hospital
 import com.example.myhealthcareapp.models.user.Client
 import kotlinx.android.synthetic.main.activity_main.*
-import android.widget.Toast
-import androidx.core.view.isVisible
 import java.util.*
 
-
-class HospitalListFragment : Fragment(), HospitalRecyclerViewAdapter.OnItemClickListener {
-    private lateinit var button: Button
+class HospitalListFragment : Fragment(), OnItemClickListener {
     private lateinit var exampleList: MutableList<Hospital>
     lateinit var adapter : HospitalRecyclerViewAdapter
 
@@ -62,6 +60,7 @@ class HospitalListFragment : Fragment(), HospitalRecyclerViewAdapter.OnItemClick
     }
 
     private fun setupUI(view: View){
+        (activity as MainActivity).topAppBar.title = getString(R.string.app_bar_title)
         (activity as MainActivity).bottomNavigation.visibility = View.VISIBLE
         (activity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = true
         (activity as MainActivity).topAppBar.menu.findItem(R.id.profile).isVisible = true

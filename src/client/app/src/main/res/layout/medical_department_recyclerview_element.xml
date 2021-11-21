@@ -74,7 +74,7 @@
             android:id="@+id/medical_department_address"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:text="Floor 3, room 314"
             android:textColor="@color/white"
             android:textSize="16sp"

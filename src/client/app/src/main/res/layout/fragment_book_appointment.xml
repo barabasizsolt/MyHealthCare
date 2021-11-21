@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".profile.ProfileFragment"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_layout_bg"
+            android:layout_marginTop="70dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="40dp"
+            android:paddingBottom="30dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Book your medical appointment"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:layout_marginStart="-10dp"
+                android:layout_marginTop="50dp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/selected_hospital"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                app:startIconDrawable="@drawable/ic_hospital"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/selected_hospital"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:inputType="textNoSuggestions"
+                    android:text="Policlinica 2"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/selected_department"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                app:startIconDrawable="@drawable/ic_department"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/selected_department"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:inputType="textNoSuggestions"
+                    android:text="Neurology"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Select from our specialists"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginStart="-10dp"
+                android:layout_marginTop="30dp"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/medic_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:itemCount="5"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="20dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                tools:listitem="@layout/medic_recyclerview_element" />
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Select your appointment day"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginStart="-10dp"
+                android:layout_marginTop="20dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/appointment_date_layout"
+                    android:layout_width="310dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/selected_day"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_calendar"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/appointment_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:inputType="textNoSuggestions"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/appointment_date_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    app:fabSize="mini"
+                    android:layout_marginBottom="25dp"
+                    app:srcCompat="@drawable/ic_pluss"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Select your appointment day"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginStart="-10dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/appointment_time_layout"
+                    android:layout_width="310dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/selected_time"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="10dp"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_access_time"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/appointment_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:inputType="textNoSuggestions"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/appointment_time_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    app:fabSize="mini"
+                    android:layout_marginBottom="25dp"
+                    app:srcCompat="@drawable/ic_pluss"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/make_appointment_btn"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:text="@string/make_appointment"
+                android:layout_marginTop="10dp"
+                style="@style/Widget.MaterialComponents.Button"
+                app:cornerRadius="15dp"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

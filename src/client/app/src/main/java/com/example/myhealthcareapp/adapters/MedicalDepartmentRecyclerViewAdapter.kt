@@ -8,18 +8,19 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myhealthcareapp.R
+import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.MedicalDepartment
 import kotlinx.android.synthetic.main.medical_department_recyclerview_element.view.*
 
-class MedicalDepartmentRecyclerViewAdapter(private val medicalDepartmentList: MutableList<MedicalDepartment>)  : RecyclerView.Adapter<MedicalDepartmentRecyclerViewAdapter.MedicalDepartmentRecyclerViewViewHolder>() {
+class MedicalDepartmentRecyclerViewAdapter(private val medicalDepartmentList: MutableList<MedicalDepartment>, private val listener : OnItemClickListener)  : RecyclerView.Adapter<MedicalDepartmentRecyclerViewAdapter.MedicalDepartmentRecyclerViewViewHolder>() {
 
-    inner class MedicalDepartmentRecyclerViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class MedicalDepartmentRecyclerViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
         val medicalDepartmentImage : ImageView = itemView.medical_department_image
         val medicalDepartmentName : TextView = itemView.medical_department_name
         val medicalDepartmentPhoneNumber : TextView = itemView.medical_department_phone_number
         val medicalDepartmentAddress : TextView = itemView.medical_department_address
 
-        /*init{
+        init{
             itemView.setOnClickListener(this)
         }
 
@@ -28,7 +29,7 @@ class MedicalDepartmentRecyclerViewAdapter(private val medicalDepartmentList: Mu
             if( position != RecyclerView.NO_POSITION) {
                 listener.onItemClick(position)
             }
-        }*/
+        }
 
     }
 

@@ -15,6 +15,7 @@ import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.constants.Constant
 import com.example.myhealthcareapp.makeAppointment.HospitalListFragment
+import com.example.myhealthcareapp.login.LoginFragment
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -94,6 +95,10 @@ class RegisterFragment : Fragment() {
                         progressBar.visibility = View.INVISIBLE
                     }
             }
+        }
+
+        loginTextView.setOnClickListener {
+            (activity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
         }
     }
 

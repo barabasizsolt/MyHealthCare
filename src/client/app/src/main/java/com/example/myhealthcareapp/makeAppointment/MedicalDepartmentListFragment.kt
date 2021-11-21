@@ -12,11 +12,12 @@ import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.MedicalDepartmentRecyclerViewAdapter
 import com.example.myhealthcareapp.constants.Constant.HospitalId
+import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.MedicalDepartment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MedicalDepartmentListFragment() : Fragment() {
+class MedicalDepartmentListFragment() : Fragment(), OnItemClickListener {
 
     private lateinit var exampleList: MutableList<MedicalDepartment>
 
@@ -24,7 +25,6 @@ class MedicalDepartmentListFragment() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_medical_department_list, container, false)
 
         val id = arguments?.getInt(HospitalId)
@@ -41,7 +41,7 @@ class MedicalDepartmentListFragment() : Fragment() {
 
         exampleList = generateDummyList(20, id)
         val recyclerview = view.findViewById<RecyclerView>(R.id.recycler_view)
-        recyclerview.adapter = MedicalDepartmentRecyclerViewAdapter(exampleList)
+        recyclerview.adapter = MedicalDepartmentRecyclerViewAdapter(exampleList, this)
         recyclerview.layoutManager = LinearLayoutManager(context)
         recyclerview.setHasFixedSize(true)
     }
@@ -60,6 +60,10 @@ class MedicalDepartmentListFragment() : Fragment() {
         }
 
         return list
+    }
+
+    override fun onItemClick(position: Int) {
+        (activity as MainActivity).replaceFragment(BookAppointmentFragment(), R.id.fragment_container, true)
     }
 
 }

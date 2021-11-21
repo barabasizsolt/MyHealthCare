@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myhealthcareapp.R
+import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.Hospital
 import kotlinx.android.synthetic.main.hospital_recyclerview_element.view.*
 
@@ -60,9 +61,5 @@ class HospitalRecyclerViewAdapter(private var hospitalList : MutableList<Hospita
     }
 
     override fun getItemCount(): Int = hospitalList.size
-
-    interface OnItemClickListener{
-        fun onItemClick(position: Int)
-    }
 
 }

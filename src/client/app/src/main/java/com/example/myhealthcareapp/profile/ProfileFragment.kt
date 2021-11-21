@@ -11,10 +11,10 @@ import androidx.core.view.get
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.cache.Cache
+import com.example.myhealthcareapp.constants.Constant.getDate
+import com.example.myhealthcareapp.forgotPassword.ForgotPasswordFragment
 import com.example.myhealthcareapp.login.LoginFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ProfileFragment : Fragment() {
     private lateinit var clientFirstName: TextView
@@ -40,6 +40,9 @@ class ProfileFragment : Fragment() {
         logoutButton = view.findViewById(R.id.logout_button)
 
         (activity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = false
+        (activity as MainActivity).topAppBar.title = getString(R.string.profile_title)
+        (activity as MainActivity).topAppBar.menu[0].isVisible = false
+        (activity as MainActivity).topAppBar.menu[1].isVisible = false
 
         return view
     }
@@ -58,10 +61,8 @@ class ProfileFragment : Fragment() {
             (activity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
             (activity as MainActivity).bottomNavigation.visibility = View.GONE
         }
-    }
-
-    private fun getDate(timeStamp: Long): String? {
-        val formatter = SimpleDateFormat("MMM dd, yyy", Locale.getDefault())
-        return formatter.format(timeStamp)
+        resetPassword.setOnClickListener {
+            (activity as MainActivity).replaceFragment(ForgotPasswordFragment(), R.id.fragment_container, true)
+        }
     }
 }
