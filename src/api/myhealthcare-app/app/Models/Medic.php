@@ -21,6 +21,6 @@ class Medic extends Model
     ];
 
     public function medicalDepartments(){
-        return $this->belongsToMany(MedicalDepartment::class, 'medical_department_medic');
+        return $this->belongsToMany(MedicalDepartment::class, 'medical_department_medic')->withPivot('date', 'hour');
     }
 }

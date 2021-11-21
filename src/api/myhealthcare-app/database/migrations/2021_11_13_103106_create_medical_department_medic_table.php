@@ -17,6 +17,8 @@ class CreateMedicalDepartmentMedicTable extends Migration
             $table->id();
             $table->unsignedBigInteger('medical_department_id');
             $table->unsignedBigInteger('medic_id');
+            $table->date('date');
+            $table->string('hour');
             $table->timestamps();
         });
     }
