@@ -15,6 +15,8 @@ import com.example.myhealthcareapp.constants.Constant.getDate
 import com.example.myhealthcareapp.forgotPassword.ForgotPasswordFragment
 import com.example.myhealthcareapp.login.LoginFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ProfileFragment : Fragment() {
     private lateinit var clientFirstName: TextView
@@ -39,6 +41,7 @@ class ProfileFragment : Fragment() {
         resetPassword = view.findViewById(R.id.click_here_text_view)
         logoutButton = view.findViewById(R.id.logout_button)
 
+        (activity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = false
         (activity as MainActivity).topAppBar.title = getString(R.string.profile_title)
         (activity as MainActivity).topAppBar.menu[0].isVisible = false
         (activity as MainActivity).topAppBar.menu[1].isVisible = false

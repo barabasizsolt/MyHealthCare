@@ -10,13 +10,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/filter"
-        android:icon="@drawable/ic_filter"
-        android:title="@string/filter"
-        android:contentDescription="@string/content_description_filter"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_profile"
         android:title="@string/profile"

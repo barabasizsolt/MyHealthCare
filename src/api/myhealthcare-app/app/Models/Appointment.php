@@ -14,4 +14,8 @@ class Appointment extends Model
         'scheduled_end_date',
         'notes'
     ];
+
+    public function feedbacks(){
+        return $this->hasMany(Feedback::class);
+    }
 }

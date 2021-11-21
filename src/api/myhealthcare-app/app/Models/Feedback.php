@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Medic extends Model
+class Feedback extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
-        'name',
-        'contact',
-        'hired_date'
+        'message',
+        'billing'
     ];
 
     protected $dates = [
@@ -20,7 +19,7 @@ class Medic extends Model
         'updated_at',
     ];
 
-    public function medicalDepartments(){
-        return $this->belongsToMany(MedicalDepartment::class, 'medical_department_medic')->withPivot('date', 'hour');
+    public function appointment(){
+        return $this->belongsTo(Appointment::class);
     }
 }

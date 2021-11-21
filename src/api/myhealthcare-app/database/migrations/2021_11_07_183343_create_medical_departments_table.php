@@ -18,7 +18,7 @@ class CreateMedicalDepartmentsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('contact');
-            $table->foreignId('hospital_id');
+            $table->unsignedBigInteger('hospital_id');
             $table->timestamps();
         });
     }
