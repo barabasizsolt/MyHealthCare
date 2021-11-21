@@ -7,7 +7,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
@@ -23,6 +24,12 @@
             android:background="@color/colorAppBlack"
             app:menu="@menu/top_app_bar"
             app:title="@string/app_bar_title" />
+
+        <SearchView
+            android:id="@+id/search_button"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:visibility="gone"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

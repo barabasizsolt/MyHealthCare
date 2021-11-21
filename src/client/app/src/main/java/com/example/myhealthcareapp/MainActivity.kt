@@ -3,6 +3,7 @@ package com.example.myhealthcareapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.example.myhealthcareapp.login.LoginFragment
 import com.example.myhealthcareapp.makeAppointment.HospitalListFragment
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     lateinit var mAuth: FirebaseAuth
     lateinit var fireStore: FirebaseFirestore
+    lateinit var searchView : SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         fireStore = Firebase.firestore
         bottomNavigation.visibility = View.GONE
+        searchView = findViewById(R.id.search_button)
 
         initBottomNavigation()
         initTopBar()
@@ -72,10 +75,6 @@ class MainActivity : AppCompatActivity() {
         topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.search -> {
-                    //TODO: implement is
-                    true
-                }
-                R.id.filter -> {
                     //TODO: implement is
                     true
                 }
