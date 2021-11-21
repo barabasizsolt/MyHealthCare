@@ -55,7 +55,9 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener {item ->
             when(item.itemId) {
                 R.id.make_appointment -> {
-                    replaceFragment(HospitalListFragment(), R.id.fragment_container)
+                    val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+                    if(fragment !is HospitalListFragment)
+                        replaceFragment(HospitalListFragment(), R.id.fragment_container)
                     true
                 }
                 R.id.feedback -> {
