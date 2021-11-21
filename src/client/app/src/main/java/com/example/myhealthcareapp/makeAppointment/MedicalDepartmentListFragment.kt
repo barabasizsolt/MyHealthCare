@@ -36,9 +36,8 @@ class MedicalDepartmentListFragment() : Fragment() {
 
     private fun setupUI(view: View, id: Int?){
         (activity as MainActivity).bottomNavigation.visibility = View.VISIBLE
-        (activity as MainActivity).topAppBar.menu[0].isVisible = true
-        (activity as MainActivity).topAppBar.menu[1].isVisible = true
-        (activity as MainActivity).topAppBar.menu[2].isVisible = true
+        (activity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = true
+        (activity as MainActivity).topAppBar.menu.findItem(R.id.profile).isVisible = true
 
         exampleList = generateDummyList(20, id)
         val recyclerview = view.findViewById<RecyclerView>(R.id.recycler_view)

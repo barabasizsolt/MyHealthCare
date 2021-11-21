@@ -39,8 +39,7 @@ class ProfileFragment : Fragment() {
         resetPassword = view.findViewById(R.id.click_here_text_view)
         logoutButton = view.findViewById(R.id.logout_button)
 
-        (activity as MainActivity).topAppBar.menu[0].isVisible = false
-        (activity as MainActivity).topAppBar.menu[1].isVisible = false
+        (activity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = false
 
         return view
     }

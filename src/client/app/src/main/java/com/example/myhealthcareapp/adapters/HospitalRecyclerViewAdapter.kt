@@ -1,5 +1,6 @@
 package com.example.myhealthcareapp.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.models.Hospital
 import kotlinx.android.synthetic.main.hospital_recyclerview_element.view.*
 
-class HospitalRecyclerViewAdapter(private val hospitalList : MutableList<Hospital>, private val listener : OnItemClickListener)  : RecyclerView.Adapter<HospitalRecyclerViewAdapter.HospitalRecyclerViewViewHolder>() {
+class HospitalRecyclerViewAdapter(private var hospitalList : MutableList<Hospital>, private val listener : OnItemClickListener)  : RecyclerView.Adapter<HospitalRecyclerViewAdapter.HospitalRecyclerViewViewHolder>() {
 
     inner class HospitalRecyclerViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val hospitalImage : ImageView = itemView.hospital_image
@@ -30,6 +31,14 @@ class HospitalRecyclerViewAdapter(private val hospitalList : MutableList<Hospita
             }
         }
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterList(filterllist: MutableList<Hospital>) {
+        // below line is to add our filtered list
+        this.hospitalList = filterllist
+        // below line is to notify our adapter as change in recycler view data
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HospitalRecyclerViewViewHolder {
