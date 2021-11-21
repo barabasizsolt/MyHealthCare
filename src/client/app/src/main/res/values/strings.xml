@@ -44,4 +44,9 @@
     <string name="selected_department">Selected Department</string>
     <string name="selected_day">Appointment date</string>
     <string name="selected_time">Appointment time</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="select_time_interval">Select Time Interval</string>
+    <string name="summary">Summary</string>
+    <string name="accept">Accept</string>
 </resources>
