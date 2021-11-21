@@ -15,8 +15,6 @@ import com.example.myhealthcareapp.constants.Constant.getDate
 import com.example.myhealthcareapp.forgotPassword.ForgotPasswordFragment
 import com.example.myhealthcareapp.login.LoginFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ProfileFragment : Fragment() {
     private lateinit var clientFirstName: TextView
