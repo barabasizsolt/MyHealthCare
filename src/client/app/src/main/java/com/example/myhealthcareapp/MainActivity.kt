@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import com.example.myhealthcareapp.login.LoginFragment
-import com.example.myhealthcareapp.makeAppointment.HospitalListFragment
-import com.example.myhealthcareapp.profile.ProfileFragment
+import com.example.myhealthcareapp.fragments.login.LoginFragment
+import com.example.myhealthcareapp.fragments.makeAppointment.HospitalListFragment
+import com.example.myhealthcareapp.fragments.profile.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -74,10 +74,6 @@ class MainActivity : AppCompatActivity() {
     private fun initTopBar(){
         topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.search -> {
-                    //TODO: implement is
-                    true
-                }
                 R.id.profile -> {
                     replaceFragment(ProfileFragment(), R.id.fragment_container)
                     true

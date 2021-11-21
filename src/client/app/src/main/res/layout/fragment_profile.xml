@@ -7,7 +7,7 @@
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".profile.ProfileFragment"
+        tools:context=".fragments.profile.ProfileFragment"
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:background="@color/colorPrimary">

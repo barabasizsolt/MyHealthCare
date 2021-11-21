@@ -1,4 +1,4 @@
-package com.example.myhealthcareapp.profile
+package com.example.myhealthcareapp.fragments.profile
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,16 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.view.get
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.cache.Cache
 import com.example.myhealthcareapp.constants.Constant.getDate
-import com.example.myhealthcareapp.forgotPassword.ForgotPasswordFragment
-import com.example.myhealthcareapp.login.LoginFragment
+import com.example.myhealthcareapp.fragments.BaseFragment
+import com.example.myhealthcareapp.fragments.forgotPassword.ForgotPasswordFragment
+import com.example.myhealthcareapp.fragments.login.LoginFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : BaseFragment() {
     private lateinit var clientFirstName: TextView
     private lateinit var clientLastName: TextView
     private lateinit var clientPersonalCode: TextView
@@ -39,10 +39,9 @@ class ProfileFragment : Fragment() {
         resetPassword = view.findViewById(R.id.click_here_text_view)
         logoutButton = view.findViewById(R.id.logout_button)
 
-        (activity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = false
-        (activity as MainActivity).topAppBar.title = getString(R.string.profile_title)
-        (activity as MainActivity).topAppBar.menu[0].isVisible = false
-        (activity as MainActivity).topAppBar.menu[1].isVisible = false
+        (mActivity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = false
+        (mActivity as MainActivity).topAppBar.menu.findItem(R.id.profile).isVisible = true
+        (mActivity as MainActivity).topAppBar.title = getString(R.string.profile_title)
 
         return view
     }
@@ -56,13 +55,13 @@ class ProfileFragment : Fragment() {
         clientEmail.text = client.clientEmail
         clientRegistrationDate.text = getDate((activity as MainActivity).mAuth.currentUser?.metadata?.creationTimestamp!!)
         logoutButton.setOnClickListener{
-            (activity as MainActivity).mAuth.signOut()
-            (activity as MainActivity).topAppBar.visibility = View.GONE
-            (activity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
-            (activity as MainActivity).bottomNavigation.visibility = View.GONE
+            (mActivity as MainActivity).mAuth.signOut()
+            (mActivity as MainActivity).topAppBar.visibility = View.GONE
+            (mActivity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
+            (mActivity as MainActivity).bottomNavigation.visibility = View.GONE
         }
         resetPassword.setOnClickListener {
-            (activity as MainActivity).replaceFragment(ForgotPasswordFragment(), R.id.fragment_container, true)
+            (mActivity as MainActivity).replaceFragment(ForgotPasswordFragment(), R.id.fragment_container, true)
         }
     }
 }

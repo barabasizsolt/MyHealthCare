@@ -1,23 +1,23 @@
-package com.example.myhealthcareapp.makeAppointment
+package com.example.myhealthcareapp.fragments.makeAppointment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.MedicalDepartmentRecyclerViewAdapter
 import com.example.myhealthcareapp.constants.Constant.HospitalId
+import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.MedicalDepartment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MedicalDepartmentListFragment() : Fragment(), OnItemClickListener {
+class MedicalDepartmentListFragment() : BaseFragment(), OnItemClickListener {
 
     private lateinit var exampleList: MutableList<MedicalDepartment>
 
@@ -35,9 +35,9 @@ class MedicalDepartmentListFragment() : Fragment(), OnItemClickListener {
     }
 
     private fun setupUI(view: View, id: Int?){
-        (activity as MainActivity).bottomNavigation.visibility = View.VISIBLE
-        (activity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = true
-        (activity as MainActivity).topAppBar.menu.findItem(R.id.profile).isVisible = true
+        (mActivity as MainActivity).bottomNavigation.visibility = View.VISIBLE
+        (mActivity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = true
+        (mActivity as MainActivity).topAppBar.menu.findItem(R.id.profile).isVisible = true
 
         exampleList = generateDummyList(20, id)
         val recyclerview = view.findViewById<RecyclerView>(R.id.recycler_view)
@@ -63,7 +63,7 @@ class MedicalDepartmentListFragment() : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        (activity as MainActivity).replaceFragment(BookAppointmentFragment(), R.id.fragment_container, true)
+        (mActivity as MainActivity).replaceFragment(BookAppointmentFragment(), R.id.fragment_container, true)
     }
 
 }
