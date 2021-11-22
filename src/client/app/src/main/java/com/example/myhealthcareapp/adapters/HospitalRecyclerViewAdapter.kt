@@ -35,9 +35,9 @@ class HospitalRecyclerViewAdapter(private var hospitalList : MutableList<Hospita
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun filterList(filterllist: MutableList<Hospital>) {
+    fun filterList(filterList: MutableList<Hospital>) {
         // below line is to add our filtered list
-        this.hospitalList = filterllist
+        this.hospitalList = filterList
         // below line is to notify our adapter as change in recycler view data
         notifyDataSetChanged()
     }

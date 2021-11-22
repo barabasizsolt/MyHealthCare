@@ -31,6 +31,15 @@ class ProfileFragment : BaseFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
+        (mActivity as MainActivity).searchIcon.isVisible = false
+        (mActivity as MainActivity).profileIconIcon.isVisible = true
+        (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.profile_title)
+        initUI(view)
+
+        return view
+    }
+
+    private fun initUI(view: View){
         clientFirstName = view.findViewById(R.id.first_name)
         clientLastName = view.findViewById(R.id.last_name)
         clientPersonalCode = view.findViewById(R.id.personal_code)
@@ -38,12 +47,6 @@ class ProfileFragment : BaseFragment() {
         clientRegistrationDate = view.findViewById(R.id.registration_date)
         resetPassword = view.findViewById(R.id.click_here_text_view)
         logoutButton = view.findViewById(R.id.logout_button)
-
-        (mActivity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = false
-        (mActivity as MainActivity).topAppBar.menu.findItem(R.id.profile).isVisible = true
-        (mActivity as MainActivity).topAppBar.title = getString(R.string.profile_title)
-
-        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

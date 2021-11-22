@@ -2,6 +2,7 @@ package com.example.myhealthcareapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var mAuth: FirebaseAuth
     lateinit var fireStore: FirebaseFirestore
     lateinit var searchView : SearchView
+    lateinit var searchIcon: MenuItem
+    lateinit var profileIconIcon: MenuItem
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         fireStore = Firebase.firestore
         bottomNavigation.visibility = View.GONE
         searchView = findViewById(R.id.search_button)
+        searchIcon = topAppBar.menu.findItem(R.id.search)
+        profileIconIcon = topAppBar.menu.findItem(R.id.profile)
 
         initBottomNavigation()
         initTopBar()
@@ -72,14 +78,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initTopBar(){
-        topAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.profile -> {
-                    replaceFragment(ProfileFragment(), R.id.fragment_container)
-                    true
-                }
-                else -> false
-            }
+        profileIconIcon.setOnMenuItemClickListener {
+            replaceFragment(ProfileFragment(), R.id.fragment_container)
+            true
         }
     }
 }

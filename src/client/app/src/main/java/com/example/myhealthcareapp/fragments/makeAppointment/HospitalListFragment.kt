@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.MainActivity
@@ -28,7 +27,6 @@ import java.util.*
 class HospitalListFragment : BaseFragment(), OnItemClickListener {
     private lateinit var exampleList: MutableList<Hospital>
     lateinit var adapter : HospitalRecyclerViewAdapter
-    private lateinit var searchIcon: MenuItem
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +61,7 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
     }
 
     private fun setupUI(view: View){
-        (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.app_bar_title)
+        (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.select_hospital)
         (mActivity as MainActivity).bottomNavigation.visibility = View.VISIBLE
         (mActivity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = true
         (mActivity as MainActivity).topAppBar.menu.findItem(R.id.profile).isVisible = true
@@ -74,9 +72,9 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
         recyclerview.adapter = adapter
         recyclerview.layoutManager = LinearLayoutManager(context)
         recyclerview.setHasFixedSize(true)
-        searchIcon = (mActivity as MainActivity).topAppBar.menu.findItem(R.id.search)
 
-        searchIcon.setOnMenuItemClickListener{
+        (mActivity as MainActivity).searchView.queryHint = (mActivity).getString(R.string.hospital_hint)
+        (mActivity as MainActivity).searchIcon.setOnMenuItemClickListener{
             (mActivity as MainActivity).searchView.visibility = View.VISIBLE
             (mActivity as MainActivity).topAppBar.visibility = View.GONE
             (mActivity as MainActivity).searchView.isIconified = false

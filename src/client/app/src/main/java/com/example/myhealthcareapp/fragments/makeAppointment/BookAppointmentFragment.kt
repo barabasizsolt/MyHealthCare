@@ -59,8 +59,8 @@ class BookAppointmentFragment : BaseFragment(),
     ): View? {
         val view = inflater.inflate(R.layout.fragment_book_appointment, container, false)
 
-        (mActivity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = false
-        (mActivity as MainActivity).topAppBar.menu.findItem(R.id.profile).isVisible = true
+        (mActivity as MainActivity).searchIcon.isVisible = false
+        (mActivity as MainActivity).profileIconIcon.isVisible = true
         setupUI(view)
 
         return view

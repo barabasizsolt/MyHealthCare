@@ -49,4 +49,8 @@
     <string name="select_time_interval">Select Time Interval</string>
     <string name="summary">Summary</string>
     <string name="accept">Accept</string>
+    <string name="select_hospital">Select Hospital</string>
+    <string name="select_department">Select Department</string>
+    <string name="hospital_hint">Search between hospitals</string>
+    <string name="department_hint">Search between departments</string>
 </resources>
