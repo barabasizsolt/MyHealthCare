@@ -51,9 +51,16 @@ class HospitalRecyclerViewAdapter(private var hospitalList : MutableList<Hospita
     override fun onBindViewHolder(holder: HospitalRecyclerViewViewHolder, position: Int) {
         val currentHospital = hospitalList[position]
 
-        Glide.with(holder.itemView.context)
-            .load(R.drawable.hospital_icon)
-            .into(holder.hospitalImage)
+        if(position % 2 == 0){
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.hospital_icon)
+                .into(holder.hospitalImage)
+        }
+        else{
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.hospital_v1)
+                .into(holder.hospitalImage)
+        }
 
         holder.hospitalName.text = currentHospital.hospitalName
         holder.hospitalPhoneNumber.text = currentHospital.hospitalPhoneNumber

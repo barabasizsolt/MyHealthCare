@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.MedicalDepartmentRecyclerViewAdapter
 import com.example.myhealthcareapp.constants.Constant.HospitalId
+import com.example.myhealthcareapp.constants.Constant.HospitalName
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.Hospital
@@ -24,6 +26,7 @@ import java.util.*
 class MedicalDepartmentListFragment() : BaseFragment(), OnItemClickListener {
     private lateinit var exampleList: MutableList<MedicalDepartment>
     private lateinit var medicalDepartmentAdapter: MedicalDepartmentRecyclerViewAdapter
+    private lateinit var selectedHospital: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +47,9 @@ class MedicalDepartmentListFragment() : BaseFragment(), OnItemClickListener {
         (mActivity as MainActivity).bottomNavigation.visibility = View.VISIBLE
         (mActivity as MainActivity).searchIcon.isVisible = true
         (mActivity as MainActivity).profileIconIcon.isVisible = true
+
+        selectedHospital = view.findViewById(R.id.selected_hospital_name)
+        selectedHospital.text = arguments?.getString(HospitalName)
 
         exampleList = generateDummyList(20, id)
         val recyclerview = view.findViewById<RecyclerView>(R.id.recycler_view)

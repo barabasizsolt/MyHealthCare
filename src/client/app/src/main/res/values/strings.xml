@@ -53,4 +53,9 @@
     <string name="select_department">Select Department</string>
     <string name="hospital_hint">Search between hospitals</string>
     <string name="department_hint">Search between departments</string>
+    <string name="hospital_phone_number">Phone Number</string>
+    <string name="hospital_address">Hospital Address</string>
+    <string name="hospital_name">Hospital Name</string>
+    <string name="medical_department_name">Medical Department Name</string>
+    <string name="medical_department_address">Medical Department Address</string>
 </resources>

@@ -44,9 +44,16 @@ class MedicalDepartmentRecyclerViewAdapter(private var medicalDepartmentList: Mu
     override fun onBindViewHolder(holder: MedicalDepartmentRecyclerViewViewHolder, position: Int) {
         val currentMedicalDepartment = medicalDepartmentList[position]
 
-        Glide.with(holder.itemView.context)
-            .load(R.drawable.hospital_icon)
-            .into(holder.medicalDepartmentImage)
+        if(position % 2 == 0){
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.department_v1)
+                .into(holder.medicalDepartmentImage)
+        }
+        else{
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.department_v2)
+                .into(holder.medicalDepartmentImage)
+        }
 
         holder.medicalDepartmentName.text = currentMedicalDepartment.medicalDepartmentName
         holder.medicalDepartmentPhoneNumber.text = currentMedicalDepartment.medicalDepartmentPhoneNumber

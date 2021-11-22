@@ -16,7 +16,7 @@ import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.HospitalRecyclerViewAdapter
 import com.example.myhealthcareapp.cache.Cache
 import com.example.myhealthcareapp.constants.Constant.HospitalId
-import com.example.myhealthcareapp.constants.Constant.HospitalIdString
+import com.example.myhealthcareapp.constants.Constant.HospitalName
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.Hospital
@@ -119,7 +119,7 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
     override fun onItemClick(position: Int) {
 
         val bundle = Bundle()
-        bundle.putString(HospitalIdString, exampleList[position].hospitalId.toString())
+        bundle.putString(HospitalName, exampleList[position].hospitalName)
         bundle.putInt(HospitalId,exampleList[position].hospitalId)
         val fragment = MedicalDepartmentListFragment()
         fragment.arguments = bundle
