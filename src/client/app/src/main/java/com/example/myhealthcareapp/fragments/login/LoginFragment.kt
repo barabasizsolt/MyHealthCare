@@ -1,4 +1,4 @@
-package com.example.myhealthcareapp.login
+package com.example.myhealthcareapp.fragments.login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,13 +11,14 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
-import com.example.myhealthcareapp.forgotPassword.ForgotPasswordFragment
-import com.example.myhealthcareapp.makeAppointment.HospitalListFragment
-import com.example.myhealthcareapp.register.RegisterFragment
+import com.example.myhealthcareapp.fragments.BaseFragment
+import com.example.myhealthcareapp.fragments.forgotPassword.ForgotPasswordFragment
+import com.example.myhealthcareapp.fragments.makeAppointment.HospitalListFragment
+import com.example.myhealthcareapp.fragments.register.RegisterFragment
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
     private lateinit var emailTextView : TextView
     private lateinit var passwordTextView : TextView
     private lateinit var emailTextLayout : TextInputLayout
@@ -52,15 +53,15 @@ class LoginFragment : Fragment() {
             if(validateInput()){
                 progressBar.visibility = View.VISIBLE
 
-                (activity as MainActivity).mAuth
+                (mActivity as MainActivity).mAuth
                     .signInWithEmailAndPassword(emailTextView.text.toString(), passwordTextView.text.toString())
                     .addOnCompleteListener(
                         requireActivity()
                     ) { task ->
                         if (task.isSuccessful) {
                             Toast.makeText(requireActivity(), "Successfully logged in", Toast.LENGTH_LONG).show()
-                            (activity as MainActivity).topAppBar.visibility = View.VISIBLE
-                            (activity as MainActivity).replaceFragment(HospitalListFragment(), R.id.fragment_container)
+                            (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
+                            (mActivity as MainActivity).replaceFragment(HospitalListFragment(), R.id.fragment_container)
                         } else {
                             Toast.makeText(requireActivity(), "Incorrect email or password", Toast.LENGTH_LONG).show()
                         }
@@ -70,10 +71,10 @@ class LoginFragment : Fragment() {
             }
         }
         signUpButton.setOnClickListener {
-            (activity as MainActivity).replaceFragment(RegisterFragment(),R.id.fragment_container,true)
+            (mActivity as MainActivity).replaceFragment(RegisterFragment(),R.id.fragment_container,true)
         }
         clickHereTextView.setOnClickListener {
-            (activity as MainActivity).replaceFragment(ForgotPasswordFragment(),R.id.fragment_container,true)
+            (mActivity as MainActivity).replaceFragment(ForgotPasswordFragment(),R.id.fragment_container,true)
         }
     }
 

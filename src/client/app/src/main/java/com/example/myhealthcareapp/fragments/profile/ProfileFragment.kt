@@ -1,4 +1,4 @@
-package com.example.myhealthcareapp.profile
+package com.example.myhealthcareapp.fragments.profile
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,16 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.view.get
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.cache.Cache
-import com.example.myhealthcareapp.login.LoginFragment
+import com.example.myhealthcareapp.constants.Constant.getDate
+import com.example.myhealthcareapp.fragments.BaseFragment
+import com.example.myhealthcareapp.fragments.forgotPassword.ForgotPasswordFragment
+import com.example.myhealthcareapp.fragments.login.LoginFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.util.*
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : BaseFragment() {
     private lateinit var clientFirstName: TextView
     private lateinit var clientLastName: TextView
     private lateinit var clientPersonalCode: TextView
@@ -31,6 +31,15 @@ class ProfileFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
+        (mActivity as MainActivity).searchIcon.isVisible = false
+        (mActivity as MainActivity).profileIconIcon.isVisible = true
+        (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.profile_title)
+        initUI(view)
+
+        return view
+    }
+
+    private fun initUI(view: View){
         clientFirstName = view.findViewById(R.id.first_name)
         clientLastName = view.findViewById(R.id.last_name)
         clientPersonalCode = view.findViewById(R.id.personal_code)
@@ -38,10 +47,6 @@ class ProfileFragment : Fragment() {
         clientRegistrationDate = view.findViewById(R.id.registration_date)
         resetPassword = view.findViewById(R.id.click_here_text_view)
         logoutButton = view.findViewById(R.id.logout_button)
-
-        (activity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = false
-
-        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,15 +58,13 @@ class ProfileFragment : Fragment() {
         clientEmail.text = client.clientEmail
         clientRegistrationDate.text = getDate((activity as MainActivity).mAuth.currentUser?.metadata?.creationTimestamp!!)
         logoutButton.setOnClickListener{
-            (activity as MainActivity).mAuth.signOut()
-            (activity as MainActivity).topAppBar.visibility = View.GONE
-            (activity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
-            (activity as MainActivity).bottomNavigation.visibility = View.GONE
+            (mActivity as MainActivity).mAuth.signOut()
+            (mActivity as MainActivity).topAppBar.visibility = View.GONE
+            (mActivity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
+            (mActivity as MainActivity).bottomNavigation.visibility = View.GONE
         }
-    }
-
-    private fun getDate(timeStamp: Long): String? {
-        val formatter = SimpleDateFormat("MMM dd, yyy", Locale.getDefault())
-        return formatter.format(timeStamp)
+        resetPassword.setOnClickListener {
+            (mActivity as MainActivity).replaceFragment(ForgotPasswordFragment(), R.id.fragment_container, true)
+        }
     }
 }

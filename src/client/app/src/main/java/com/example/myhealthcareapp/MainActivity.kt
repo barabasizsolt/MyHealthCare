@@ -2,12 +2,13 @@ package com.example.myhealthcareapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import com.example.myhealthcareapp.login.LoginFragment
-import com.example.myhealthcareapp.makeAppointment.HospitalListFragment
-import com.example.myhealthcareapp.profile.ProfileFragment
+import com.example.myhealthcareapp.fragments.login.LoginFragment
+import com.example.myhealthcareapp.fragments.makeAppointment.HospitalListFragment
+import com.example.myhealthcareapp.fragments.profile.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var mAuth: FirebaseAuth
     lateinit var fireStore: FirebaseFirestore
     lateinit var searchView : SearchView
+    lateinit var searchIcon: MenuItem
+    lateinit var profileIconIcon: MenuItem
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         fireStore = Firebase.firestore
         bottomNavigation.visibility = View.GONE
         searchView = findViewById(R.id.search_button)
+        searchIcon = topAppBar.menu.findItem(R.id.search)
+        profileIconIcon = topAppBar.menu.findItem(R.id.profile)
 
         initBottomNavigation()
         initTopBar()
@@ -74,18 +80,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initTopBar(){
-        topAppBar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.search -> {
-                    //TODO: implement is
-                    true
-                }
-                R.id.profile -> {
-                    replaceFragment(ProfileFragment(), R.id.fragment_container)
-                    true
-                }
-                else -> false
-            }
+        profileIconIcon.setOnMenuItemClickListener {
+            replaceFragment(ProfileFragment(), R.id.fragment_container)
+            true
         }
     }
 }

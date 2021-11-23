@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myhealthcareapp.R
+import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.Hospital
 import kotlinx.android.synthetic.main.hospital_recyclerview_element.view.*
 
@@ -34,9 +35,9 @@ class HospitalRecyclerViewAdapter(private var hospitalList : MutableList<Hospita
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun filterList(filterllist: MutableList<Hospital>) {
+    fun filterList(filterList: MutableList<Hospital>) {
         // below line is to add our filtered list
-        this.hospitalList = filterllist
+        this.hospitalList = filterList
         // below line is to notify our adapter as change in recycler view data
         notifyDataSetChanged()
     }
@@ -50,9 +51,16 @@ class HospitalRecyclerViewAdapter(private var hospitalList : MutableList<Hospita
     override fun onBindViewHolder(holder: HospitalRecyclerViewViewHolder, position: Int) {
         val currentHospital = hospitalList[position]
 
-        Glide.with(holder.itemView.context)
-            .load(R.drawable.hospital_icon)
-            .into(holder.hospitalImage)
+        if(position % 2 == 0){
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.hospital_icon)
+                .into(holder.hospitalImage)
+        }
+        else{
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.hospital_v1)
+                .into(holder.hospitalImage)
+        }
 
         holder.hospitalName.text = currentHospital.hospitalName
         holder.hospitalPhoneNumber.text = currentHospital.hospitalPhoneNumber
@@ -60,9 +68,5 @@ class HospitalRecyclerViewAdapter(private var hospitalList : MutableList<Hospita
     }
 
     override fun getItemCount(): Int = hospitalList.size
-
-    interface OnItemClickListener{
-        fun onItemClick(position: Int)
-    }
 
 }

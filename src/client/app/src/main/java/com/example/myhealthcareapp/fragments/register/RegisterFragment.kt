@@ -1,4 +1,4 @@
-package com.example.myhealthcareapp.register
+package com.example.myhealthcareapp.fragments.register
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
@@ -14,11 +14,13 @@ import android.widget.Toast
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.constants.Constant
-import com.example.myhealthcareapp.makeAppointment.HospitalListFragment
+import com.example.myhealthcareapp.fragments.BaseFragment
+import com.example.myhealthcareapp.fragments.makeAppointment.HospitalListFragment
+import com.example.myhealthcareapp.fragments.login.LoginFragment
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseFragment() {
     private lateinit var firstName: TextView
     private lateinit var lastName: TextView
     private lateinit var email: TextView
@@ -69,17 +71,17 @@ class RegisterFragment : Fragment() {
                     "personalCode" to personalCode.text.toString()
                 )
 
-                (activity as MainActivity).mAuth
+                (mActivity as MainActivity).mAuth
                     .createUserWithEmailAndPassword(email.text.toString(), password.text.toString())
                     .addOnCompleteListener(
                         requireActivity()
                     ) { task ->
                         if (task.isSuccessful) {
-                            (activity as MainActivity).fireStore.collection("users").document(email.text.toString()).set(user)
+                            (mActivity as MainActivity).fireStore.collection("users").document(email.text.toString()).set(user)
                                 .addOnSuccessListener {
                                     Toast.makeText(requireActivity(), "Successfully Registered", Toast.LENGTH_LONG).show()
-                                    (activity as MainActivity).topAppBar.visibility = View.VISIBLE
-                                    (activity as MainActivity).replaceFragment(HospitalListFragment(), R.id.fragment_container)
+                                    (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
+                                    (mActivity as MainActivity).replaceFragment(HospitalListFragment(), R.id.fragment_container)
                                 }
                                 .addOnFailureListener { e ->
                                     Log.w(TAG, "Some error occurred during registration", e)
@@ -94,6 +96,10 @@ class RegisterFragment : Fragment() {
                         progressBar.visibility = View.INVISIBLE
                     }
             }
+        }
+
+        loginTextView.setOnClickListener {
+            (mActivity as MainActivity).replaceFragment(LoginFragment(), R.id.fragment_container)
         }
     }
 
