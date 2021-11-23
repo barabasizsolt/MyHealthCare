@@ -1,5 +1,6 @@
 package com.example.myhealthcareapp.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
+import com.example.myhealthcareapp.models.Hospital
 import com.example.myhealthcareapp.models.MedicalDepartment
 import kotlinx.android.synthetic.main.medical_department_recyclerview_element.view.*
 
-class MedicalDepartmentRecyclerViewAdapter(private val medicalDepartmentList: MutableList<MedicalDepartment>, private val listener : OnItemClickListener)  : RecyclerView.Adapter<MedicalDepartmentRecyclerViewAdapter.MedicalDepartmentRecyclerViewViewHolder>() {
+class MedicalDepartmentRecyclerViewAdapter(private var medicalDepartmentList: MutableList<MedicalDepartment>, private val listener : OnItemClickListener)  : RecyclerView.Adapter<MedicalDepartmentRecyclerViewAdapter.MedicalDepartmentRecyclerViewViewHolder>() {
 
     inner class MedicalDepartmentRecyclerViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
         val medicalDepartmentImage : ImageView = itemView.medical_department_image
@@ -42,9 +44,16 @@ class MedicalDepartmentRecyclerViewAdapter(private val medicalDepartmentList: Mu
     override fun onBindViewHolder(holder: MedicalDepartmentRecyclerViewViewHolder, position: Int) {
         val currentMedicalDepartment = medicalDepartmentList[position]
 
-        Glide.with(holder.itemView.context)
-            .load(R.drawable.hospital_icon)
-            .into(holder.medicalDepartmentImage)
+        if(position % 2 == 0){
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.department_v1)
+                .into(holder.medicalDepartmentImage)
+        }
+        else{
+            Glide.with(holder.itemView.context)
+                .load(R.drawable.department_v2)
+                .into(holder.medicalDepartmentImage)
+        }
 
         holder.medicalDepartmentName.text = currentMedicalDepartment.medicalDepartmentName
         holder.medicalDepartmentPhoneNumber.text = currentMedicalDepartment.medicalDepartmentPhoneNumber
@@ -52,4 +61,12 @@ class MedicalDepartmentRecyclerViewAdapter(private val medicalDepartmentList: Mu
     }
 
     override fun getItemCount(): Int = medicalDepartmentList.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterList(filterList: MutableList<MedicalDepartment>) {
+        // below line is to add our filtered list
+        this.medicalDepartmentList = filterList
+        // below line is to notify our adapter as change in recycler view data
+        notifyDataSetChanged()
+    }
 }

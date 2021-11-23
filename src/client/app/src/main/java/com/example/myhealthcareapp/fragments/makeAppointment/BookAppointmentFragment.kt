@@ -1,4 +1,4 @@
-package com.example.myhealthcareapp.makeAppointment
+package com.example.myhealthcareapp.fragments.makeAppointment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,6 +17,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.view.get
 import com.example.myhealthcareapp.MainActivity
+import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.CustomDate
 import com.example.myhealthcareapp.models.Hospital
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class BookAppointmentFragment : Fragment(),
+class BookAppointmentFragment : BaseFragment(),
     DatePickerDialog.OnDateSetListener,
     OnItemClickListener
 {
@@ -58,8 +59,8 @@ class BookAppointmentFragment : Fragment(),
     ): View? {
         val view = inflater.inflate(R.layout.fragment_book_appointment, container, false)
 
-        (activity as MainActivity).topAppBar.menu[0].isVisible = false
-        (activity as MainActivity).topAppBar.menu[1].isVisible = false
+        (mActivity as MainActivity).searchIcon.isVisible = false
+        (mActivity as MainActivity).profileIconIcon.isVisible = true
         setupUI(view)
 
         return view
