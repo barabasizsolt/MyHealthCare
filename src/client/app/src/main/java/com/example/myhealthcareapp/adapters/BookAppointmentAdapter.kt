@@ -15,7 +15,7 @@ import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.Medic
 
 class BookAppointmentAdapter(private val mList: List<Medic>, private val listener : OnItemClickListener) : RecyclerView.Adapter<BookAppointmentAdapter.ViewHolder>() {
-    private var selectedPosition = 0;
+    private var selectedPosition = 0
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

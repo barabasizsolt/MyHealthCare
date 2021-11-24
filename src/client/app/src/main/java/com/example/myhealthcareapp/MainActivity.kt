@@ -6,8 +6,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import com.example.myhealthcareapp.fragments.feedback.FeedbackFragment
 import com.example.myhealthcareapp.fragments.login.LoginFragment
 import com.example.myhealthcareapp.fragments.makeAppointment.HospitalListFragment
+import com.example.myhealthcareapp.fragments.myAppointments.MyAppointmentsFragment
 import com.example.myhealthcareapp.fragments.profile.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -59,19 +61,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun initBottomNavigation(){
         bottomNavigation.setOnItemSelectedListener {item ->
+            val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
             when(item.itemId) {
                 R.id.make_appointment -> {
-                    val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+
                     if(fragment !is HospitalListFragment)
                         replaceFragment(HospitalListFragment(), R.id.fragment_container)
                     true
                 }
                 R.id.feedback -> {
-                    //TODO: implement it
+
+                    if(fragment !is FeedbackFragment)
+                        replaceFragment(FeedbackFragment(), R.id.fragment_container)
                     true
                 }
                 R.id.my_appointments -> {
-                    //TODO: implement it
+
+                    if(fragment !is MyAppointmentsFragment)
+                        replaceFragment(MyAppointmentsFragment(), R.id.fragment_container)
                     true
                 }
                 else -> false
