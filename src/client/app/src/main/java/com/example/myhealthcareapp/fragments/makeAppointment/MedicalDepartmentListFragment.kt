@@ -1,7 +1,6 @@
 package com.example.myhealthcareapp.fragments.makeAppointment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.example.myhealthcareapp.constants.Constant.HospitalId
 import com.example.myhealthcareapp.constants.Constant.HospitalName
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.Hospital
 import com.example.myhealthcareapp.models.MedicalDepartment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
