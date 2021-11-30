@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.core.view.get
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.fragments.BaseFragment
+import com.example.myhealthcareapp.fragments.myAppointments.MyAppointmentsFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.CustomDate
 import com.example.myhealthcareapp.models.Hospital
@@ -134,7 +135,7 @@ class BookAppointmentFragment : BaseFragment(),
                     .setNeutralButton(resources.getString(R.string.cancel)) { _, _ -> }
                     .setPositiveButton(resources.getString(R.string.accept)) { _, _ ->
                         Toast.makeText(requireContext(), "Appointment added", Toast.LENGTH_SHORT).show()
-                        //TODO navigate to myAppointmentsFragment
+                        (mActivity as MainActivity).replaceFragment(MyAppointmentsFragment(), R.id.fragment_container)
                     }
                     .show()
             }
