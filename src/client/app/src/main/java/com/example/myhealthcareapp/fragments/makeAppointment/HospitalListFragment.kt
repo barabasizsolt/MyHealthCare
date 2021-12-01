@@ -25,7 +25,7 @@ import java.util.*
 
 class HospitalListFragment : BaseFragment(), OnItemClickListener {
     private lateinit var exampleList: MutableList<Hospital>
-    lateinit var adapter : HospitalRecyclerViewAdapter
+    private lateinit var adapter : HospitalRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,8 +62,8 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
     private fun setupUI(view: View){
         (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.select_hospital)
         (mActivity as MainActivity).bottomNavigation.visibility = View.VISIBLE
-        (mActivity as MainActivity).topAppBar.menu.findItem(R.id.search).isVisible = true
-        (mActivity as MainActivity).topAppBar.menu.findItem(R.id.profile).isVisible = true
+        (mActivity as MainActivity).searchIcon.isVisible = true
+        (mActivity as MainActivity).profileIcon.isVisible = true
 
         exampleList = generateDummyList(20)
         val recyclerview = view.findViewById<RecyclerView>(R.id.recycler_view)
@@ -73,6 +73,9 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
         recyclerview.setHasFixedSize(true)
 
         (mActivity as MainActivity).searchView.queryHint = (mActivity).getString(R.string.hospital_hint)
+
+        (mActivity as MainActivity).setProfileIconListener()
+
         (mActivity as MainActivity).searchIcon.setOnMenuItemClickListener{
             (mActivity as MainActivity).searchView.visibility = View.VISIBLE
             (mActivity as MainActivity).topAppBar.visibility = View.GONE

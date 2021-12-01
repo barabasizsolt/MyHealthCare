@@ -16,8 +16,4 @@ open class BaseFragment : Fragment() {
         super.onAttach(context)
         mActivity = context as Activity
     }
-
-    override fun onDetach() {
-        super.onDetach()
-    }
 }

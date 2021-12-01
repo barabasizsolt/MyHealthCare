@@ -59,4 +59,13 @@
     <string name="medical_department_name">Medical Department Name</string>
     <string name="medical_department_address">Medical Department Address</string>
     <string name="decline">Decline</string>
+    <string name="my_feedbacks">My Feedbacks</string>
+    <string name="log_in_as_medic">Log in as medic</string>
+    <string name="upcoming_appointments">Upcomming appointments</string>
+    <string name="full_name">Full Name</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="hire_date">Hire Date</string>
+    <string name="patient_name">Patient Name</string>
+    <string name="appointment_start_date">Appointment Start</string>
+    <string name="view_details">View Details</string>
 </resources>

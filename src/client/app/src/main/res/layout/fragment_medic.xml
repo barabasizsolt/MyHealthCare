@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.makeAppointment.HospitalListFragment"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center_horizontal"
+    tools:context=".fragments.medic.MedicFragment"
     android:background="@color/colorPrimary">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -14,7 +14,5 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:layout_marginTop="60dp"
-        android:padding="4dp"
-        tools:listitem="@layout/hospital_recyclerview_element" />
-
+        tools:listitem="@layout/medic_appointment_element" />
 </LinearLayout>

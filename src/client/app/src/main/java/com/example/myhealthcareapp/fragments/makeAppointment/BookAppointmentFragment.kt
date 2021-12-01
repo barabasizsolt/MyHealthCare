@@ -1,7 +1,6 @@
 package com.example.myhealthcareapp.fragments.makeAppointment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import android.util.Log
 import android.widget.Toast
-import androidx.core.view.get
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.fragments.myAppointments.MyAppointmentsFragment
@@ -60,9 +58,48 @@ class BookAppointmentFragment : BaseFragment(),
     ): View? {
         val view = inflater.inflate(R.layout.fragment_book_appointment, container, false)
 
+        calendar = Calendar.getInstance()
+        formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        recyclerview = view.findViewById(R.id.medic_recyclerview)
+        medics = generateDummyList()
+        currentMedic = medics[0]
+        adapter = BookAppointmentAdapter(medics, this)
+        recyclerview.adapter = adapter
+        recyclerview.setHasFixedSize(true)
+        dateButton = view.findViewById(R.id.appointment_date_btn)
+        timeButton = view.findViewById(R.id.appointment_time_btn)
+        bookAppointment = view.findViewById(R.id.make_appointment_btn)
+        appointmentDate = view.findViewById(R.id.appointment_date)
+        appointmentDateLayout = view.findViewById(R.id.appointment_date_layout)
+        appointmentTime = view.findViewById(R.id.appointment_time)
+        appointmentTimeLayout = view.findViewById(R.id.appointment_time_layout)
+        availableDays = mutableListOf()
+        availableHours = mutableListOf()
+
+        //Dummy Data for available days
+        for(i in 10 until 20) {
+            val date = "2021-12-$i"
+            formatter.parse(date)
+            val cal = formatter.calendar
+            val customDate = CustomDate(cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DATE])
+            availableDays.add(customDate)
+        }
+        for(i in 2 until 25) {
+            val date = "2022-01-$i"
+            formatter.parse(date)
+            val cal = formatter.calendar
+            val customDate = CustomDate(cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DATE])
+            availableDays.add(customDate)
+        }
+
+        //Dummy data for available hours
+        for(i in 10 until 20){
+            val hour = "12:30 - 14:$i"
+            availableHours.add(hour)
+        }
+
         (mActivity as MainActivity).searchIcon.isVisible = false
-        (mActivity as MainActivity).profileIconIcon.isVisible = true
-        setupUI(view)
+        (mActivity as MainActivity).profileIcon.isVisible = true
 
         return view
     }
@@ -136,51 +173,10 @@ class BookAppointmentFragment : BaseFragment(),
                     .setPositiveButton(resources.getString(R.string.accept)) { _, _ ->
                         Toast.makeText(requireContext(), "Appointment added", Toast.LENGTH_SHORT).show()
                         (mActivity as MainActivity).replaceFragment(MyAppointmentsFragment(), R.id.fragment_container)
+                        (mActivity as MainActivity).bottomNavigation.selectedItemId = R.id.my_appointments
                     }
                     .show()
             }
-        }
-    }
-
-    private fun setupUI(view: View){
-        calendar = Calendar.getInstance()
-        formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        recyclerview = view.findViewById(R.id.medic_recyclerview)
-        medics = generateDummyList()
-        currentMedic = medics[0]
-        adapter = BookAppointmentAdapter(medics, this)
-        recyclerview.adapter = adapter
-        recyclerview.setHasFixedSize(true)
-        dateButton = view.findViewById(R.id.appointment_date_btn)
-        timeButton = view.findViewById(R.id.appointment_time_btn)
-        bookAppointment = view.findViewById(R.id.make_appointment_btn)
-        appointmentDate = view.findViewById(R.id.appointment_date)
-        appointmentDateLayout = view.findViewById(R.id.appointment_date_layout)
-        appointmentTime = view.findViewById(R.id.appointment_time)
-        appointmentTimeLayout = view.findViewById(R.id.appointment_time_layout)
-        availableDays = mutableListOf()
-        availableHours = mutableListOf()
-
-        //Dummy Data for available days
-        for(i in 10 until 20) {
-            val date = "2021-12-$i"
-            formatter.parse(date)
-            val cal = formatter.calendar
-            val customDate = CustomDate(cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DATE])
-            availableDays.add(customDate)
-        }
-        for(i in 2 until 25) {
-            val date = "2022-01-$i"
-            formatter.parse(date)
-            val cal = formatter.calendar
-            val customDate = CustomDate(cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DATE])
-            availableDays.add(customDate)
-        }
-
-        //Dummy data for available hours
-        for(i in 10 until 20){
-            val hour = "12:30 - 14:$i"
-            availableHours.add(hour)
         }
     }
 
