@@ -22,8 +22,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var fireStore: FirebaseFirestore
     lateinit var searchView : SearchView
     lateinit var searchIcon: MenuItem
-    lateinit var profileIconIcon: MenuItem
-
+    lateinit var profileIcon: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +33,9 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.visibility = View.GONE
         searchView = findViewById(R.id.search_button)
         searchIcon = topAppBar.menu.findItem(R.id.search)
-        profileIconIcon = topAppBar.menu.findItem(R.id.profile)
+        profileIcon = topAppBar.menu.findItem(R.id.profile)
 
         initBottomNavigation()
-        initTopBar()
 
         if(mAuth.currentUser == null){
             topAppBar.visibility = View.GONE
@@ -86,9 +84,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initTopBar(){
-        profileIconIcon.setOnMenuItemClickListener {
-            replaceFragment(ProfileFragment(), R.id.fragment_container)
+    fun setProfileIconListener(){
+        profileIcon.setOnMenuItemClickListener {
+            replaceFragment(ProfileFragment(), R.id.fragment_container, addToBackStack = true)
             true
         }
     }

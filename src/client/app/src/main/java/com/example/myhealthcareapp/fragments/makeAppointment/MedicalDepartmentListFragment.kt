@@ -19,12 +19,14 @@ import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.MedicalDepartment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import kotlin.properties.Delegates
 
 
 class MedicalDepartmentListFragment() : BaseFragment(), OnItemClickListener {
     private lateinit var exampleList: MutableList<MedicalDepartment>
     private lateinit var medicalDepartmentAdapter: MedicalDepartmentRecyclerViewAdapter
     private lateinit var selectedHospital: TextView
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,29 +34,27 @@ class MedicalDepartmentListFragment() : BaseFragment(), OnItemClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_medical_department_list, container, false)
 
-        val id = arguments?.getInt(HospitalId)
+        selectedHospital = view.findViewById(R.id.selected_hospital_name)
+        recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
 
-        setupUI(view,id)
-
-        return view
-    }
-
-    private fun setupUI(view: View, id: Int?){
         (mActivity as MainActivity).searchView.queryHint = (mActivity).getString(R.string.department_hint)
         (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.select_department)
         (mActivity as MainActivity).bottomNavigation.visibility = View.VISIBLE
         (mActivity as MainActivity).searchIcon.isVisible = true
-        (mActivity as MainActivity).profileIconIcon.isVisible = true
+        (mActivity as MainActivity).profileIcon.isVisible = true
 
-        selectedHospital = view.findViewById(R.id.selected_hospital_name)
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         selectedHospital.text = arguments?.getString(HospitalName)
-
-        exampleList = generateDummyList(20, id)
-        val recyclerview = view.findViewById<RecyclerView>(R.id.recycler_view)
+        exampleList = generateDummyList(20, arguments?.getInt(HospitalId)!!)
         medicalDepartmentAdapter = MedicalDepartmentRecyclerViewAdapter(exampleList, this)
-        recyclerview.adapter = medicalDepartmentAdapter
-        recyclerview.layoutManager = LinearLayoutManager(context)
-        recyclerview.setHasFixedSize(true)
+        recyclerView.adapter = medicalDepartmentAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.setHasFixedSize(true)
 
         (mActivity as MainActivity).searchIcon.setOnMenuItemClickListener{
             (mActivity as MainActivity).searchView.visibility = View.VISIBLE
