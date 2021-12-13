@@ -19,13 +19,14 @@ import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.Hospital
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
 
 class HospitalListFragment : BaseFragment(), OnItemClickListener {
     private lateinit var hospitals: MutableList<Hospital>
+    private lateinit var recyclerview: RecyclerView
     private lateinit var adapter : HospitalRecyclerViewAdapter
-    private val viewModel by viewModel<MyHealthCareViewModel>()
+    private val viewModel by sharedViewModel<MyHealthCareViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +36,7 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
         viewModel.loadHospitals()
         viewModel.hospitals.observe(viewLifecycleOwner, { response ->
             if(response.isSuccessful) {
-                Log.d("Hospitals", response.body()?.data.toString())
+                Log.d("Hospitals", response.body()?.data?.size.toString())
                 hospitals = response.body()?.data as MutableList
                 setupUI(view)
             }
@@ -46,6 +47,11 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
         return view
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.hospitals.removeObservers(viewLifecycleOwner)
+    }
+
     private fun setupUI(view: View){
         (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
         (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.select_hospital)
@@ -53,7 +59,7 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
         (mActivity as MainActivity).searchIcon.isVisible = true
         (mActivity as MainActivity).profileIcon.isVisible = true
 
-        val recyclerview = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerview = view.findViewById(R.id.recycler_view)
         adapter = HospitalRecyclerViewAdapter(hospitals, this)
         recyclerview.adapter = adapter
         recyclerview.layoutManager = LinearLayoutManager(context)

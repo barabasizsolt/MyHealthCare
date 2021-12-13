@@ -1,10 +1,16 @@
 package com.example.myhealthcareapp.models
 
+import com.google.gson.annotations.SerializedName
+
 data class MedicalDepartment(
+    @SerializedName("id")
     val medicalDepartmentId: Int,
+    @SerializedName("name")
     val medicalDepartmentName: String,
-    val medicalDepartmentPhoneNumber: String,
-    val medicalDepartmentAddress: String,
+    @SerializedName("description")
     val description: String,
-    val hospitalId: Int?
+    @SerializedName("contact")
+    val medicalDepartmentPhoneNumber: String,
+    @SerializedName("hospital")
+    val hospitalName: String
 )

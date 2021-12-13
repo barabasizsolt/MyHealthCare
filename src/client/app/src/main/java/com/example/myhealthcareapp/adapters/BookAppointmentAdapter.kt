@@ -25,8 +25,6 @@ class BookAppointmentAdapter(private val mList: List<Medic>, private val listene
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemsViewModel = mList[position]
-        //holder.medicImage
-
         Glide.with(holder.itemView.context)
             .load(R.drawable.ic_avatar)
             .placeholder(R.drawable.ic_avatar)
@@ -64,7 +62,7 @@ class BookAppointmentAdapter(private val mList: List<Medic>, private val listene
 
     @SuppressLint("NotifyDataSetChanged")
     fun selectMedic(position: Int){
-       selectedPosition = position
+        selectedPosition = position
         notifyDataSetChanged()
     }
 }

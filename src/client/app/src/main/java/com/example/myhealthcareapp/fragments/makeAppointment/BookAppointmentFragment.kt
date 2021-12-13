@@ -15,15 +15,15 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import android.util.Log
 import android.widget.Toast
 import com.example.myhealthcareapp.MainActivity
+import com.example.myhealthcareapp.api.MyHealthCareViewModel
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.fragments.myAppointments.MyAppointmentsFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.CustomDate
-import com.example.myhealthcareapp.models.Hospital
-import com.example.myhealthcareapp.models.MedicalDepartment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,11 +45,16 @@ class BookAppointmentFragment : BaseFragment(),
     private lateinit var availableDays: MutableList<CustomDate>
     private lateinit var availableHours: MutableList<String>
 
-    private lateinit var currentHospital: Hospital
-    private lateinit var currentDepartment: MedicalDepartment
+    private lateinit var currentHospitalName: String
+    private lateinit var currentHospitalId: String
+    private lateinit var currentDepartmentName: String
+    private lateinit var currentDepartmentId: String
     private lateinit var currentMedic: Medic
 
-    //Dummy List for medics
+    private lateinit var selectedHospitalTextView: TextView
+    private lateinit var selectedDepartmentTextView: TextView
+
+    private val viewModel by sharedViewModel<MyHealthCareViewModel>()
     private lateinit var medics: MutableList<Medic>
 
     override fun onCreateView(
@@ -58,14 +63,16 @@ class BookAppointmentFragment : BaseFragment(),
     ): View? {
         val view = inflater.inflate(R.layout.fragment_book_appointment, container, false)
 
+        currentHospitalName = arguments?.getString("hospitalName").toString()
+        currentHospitalId = arguments?.getString("hospitalId").toString()
+        currentDepartmentName = arguments?.getString("departmentName").toString()
+        currentDepartmentId = arguments?.getString("departmentId").toString()
+
         calendar = Calendar.getInstance()
         formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         recyclerview = view.findViewById(R.id.medic_recyclerview)
-        medics = generateDummyList()
-        currentMedic = medics[0]
-        adapter = BookAppointmentAdapter(medics, this)
-        recyclerview.adapter = adapter
-        recyclerview.setHasFixedSize(true)
+        selectedHospitalTextView = view.findViewById(R.id.selected_hospital)
+        selectedDepartmentTextView = view.findViewById(R.id.selected_department)
         dateButton = view.findViewById(R.id.appointment_date_btn)
         timeButton = view.findViewById(R.id.appointment_time_btn)
         bookAppointment = view.findViewById(R.id.make_appointment_btn)
@@ -98,14 +105,29 @@ class BookAppointmentFragment : BaseFragment(),
             availableHours.add(hour)
         }
 
-        (mActivity as MainActivity).searchIcon.isVisible = false
-        (mActivity as MainActivity).profileIcon.isVisible = true
+        viewModel.loadMedics(currentDepartmentId.toInt())
+        viewModel.medics.observe(viewLifecycleOwner, { response ->
+            if(response.isSuccessful){
+                medics = response.body()?.data as MutableList
+                initUI()
+            }
+        })
 
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun initUI() {
+        (mActivity as MainActivity).searchIcon.isVisible = false
+        (mActivity as MainActivity).profileIcon.isVisible = true
+
+        selectedHospitalTextView.text = currentHospitalName
+        selectedDepartmentTextView.text = currentDepartmentName
+
+        currentMedic = medics[0]
+        adapter = BookAppointmentAdapter(medics, this)
+        recyclerview.adapter = adapter
+        recyclerview.setHasFixedSize(true)
+
         dateButton.setOnClickListener {
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
@@ -180,15 +202,6 @@ class BookAppointmentFragment : BaseFragment(),
         }
     }
 
-    private fun generateDummyList(): MutableList<Medic> {
-        val list : MutableList<Medic> = mutableListOf()
-        for (i in 0 until 20) {
-            val item = Medic(i, "Dr House$i")
-            list += item
-        }
-        return list
-    }
-
     override fun onDateSet(picker: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         Log.d("DATE", "$year $monthOfYear $dayOfMonth")
         var month = (monthOfYear + 1).toString()
@@ -209,7 +222,6 @@ class BookAppointmentFragment : BaseFragment(),
         adapter.selectMedic(position)
         appointmentDate.text = null
         appointmentTime.text = null
-       //TODO: call API with the newly selected medic
     }
 
     private fun validateInput(): Boolean {
