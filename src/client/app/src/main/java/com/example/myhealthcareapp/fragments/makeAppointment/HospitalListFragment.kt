@@ -1,6 +1,5 @@
 package com.example.myhealthcareapp.fragments.makeAppointment
 
-import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,61 +12,49 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.HospitalRecyclerViewAdapter
-import com.example.myhealthcareapp.cache.Cache
+import com.example.myhealthcareapp.api.MyHealthCareViewModel
 import com.example.myhealthcareapp.constants.Constant.HospitalId
 import com.example.myhealthcareapp.constants.Constant.HospitalName
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.Hospital
-import com.example.myhealthcareapp.models.user.Client
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class HospitalListFragment : BaseFragment(), OnItemClickListener {
-    private lateinit var exampleList: MutableList<Hospital>
+    private lateinit var hospitals: MutableList<Hospital>
     private lateinit var adapter : HospitalRecyclerViewAdapter
+    private val viewModel by viewModel<MyHealthCareViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_hospital_list, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val email = (mActivity as MainActivity).mAuth.currentUser!!.email!!
-        (mActivity as MainActivity).fireStore.collection("users").document(email).get()
-            .addOnSuccessListener { document ->
-                if(document != null){
-                    val userId = (mActivity as MainActivity).mAuth.currentUser!!.uid
-                    val firstName = document.data!!["firstName"].toString()
-                    val lastName = document.data!!["lastName"].toString()
-                    val personalCode = document.data!!["personalCode"].toString()
-
-                    val client = Client(userId, firstName, lastName, email, personalCode)
-                    Cache.setClient(client)
-                    Log.d(ContentValues.TAG, client.toString())
-                    setupUI(view)
-                }
-                else{
-                    Log.d(ContentValues.TAG, "No such user")
-                }
+        val view = inflater.inflate(R.layout.fragment_hospital_list, container, false)
+        viewModel.loadHospitals()
+        viewModel.hospitals.observe(viewLifecycleOwner, { response ->
+            if(response.isSuccessful) {
+                Log.d("Hospitals", response.body()?.data.toString())
+                hospitals = response.body()?.data as MutableList
+                setupUI(view)
             }
-            .addOnFailureListener { exception ->
-                Log.d(ContentValues.TAG, "Get failed with ", exception)
+            else {
+                Log.e("HospitalError", response.errorBody().toString())
             }
+        })
+        return view
     }
 
     private fun setupUI(view: View){
+        (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
         (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.select_hospital)
         (mActivity as MainActivity).bottomNavigation.visibility = View.VISIBLE
         (mActivity as MainActivity).searchIcon.isVisible = true
         (mActivity as MainActivity).profileIcon.isVisible = true
 
-        exampleList = generateDummyList(20)
         val recyclerview = view.findViewById<RecyclerView>(R.id.recycler_view)
-        adapter = HospitalRecyclerViewAdapter(exampleList, this)
+        adapter = HospitalRecyclerViewAdapter(hospitals, this)
         recyclerview.adapter = adapter
         recyclerview.layoutManager = LinearLayoutManager(context)
         recyclerview.setHasFixedSize(true)
@@ -101,28 +88,10 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
         }
     }
 
-    private fun generateDummyList(size: Int): MutableList<Hospital> {
-
-        val list : MutableList<Hospital> = mutableListOf()
-        for (i in 0 until size) {
-            val item = Hospital(i,"Policlinica 2_$i",
-                "0744077777",
-                "Bulevardul 1 Decembrie 1918, Târgu Mureș 540011",
-                "asdf",
-                "asdf",
-                "asdf"
-            )
-            list += item
-        }
-
-        return list
-    }
-
     override fun onItemClick(position: Int) {
-
         val bundle = Bundle()
-        bundle.putString(HospitalName, exampleList[position].hospitalName)
-        bundle.putInt(HospitalId,exampleList[position].hospitalId)
+        bundle.putString(HospitalName, hospitals[position].hospitalName)
+        bundle.putInt(HospitalId, hospitals[position].hospitalId)
         val fragment = MedicalDepartmentListFragment()
         fragment.arguments = bundle
 
@@ -132,8 +101,7 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
     private fun filter(text: String?) {
         val filteredList: MutableList<Hospital> = mutableListOf()
 
-        for (item in exampleList) {
-            // checking if the entered string matched with any item of our recycler view.
+        for (item in hospitals) {
             if (text != null) {
                 if (item.hospitalName.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
 
@@ -141,10 +109,10 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
                 }
             }
         }
-        if (filteredList.isEmpty())
+        if (filteredList.isEmpty()) {
             Toast.makeText(context, "No Data Found", Toast.LENGTH_SHORT).show()
+        }
 
         adapter.filterList(filteredList)
-
     }
 }

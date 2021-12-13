@@ -76,11 +76,6 @@ class MyAppointmentsFragment : BaseFragment(), OnItemClickListener {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.summary))
             .setItems(summary) {_, _ ->}
-            .setNeutralButton(resources.getString(R.string.cancel)) { _, _ -> }
-            .setNegativeButton(resources.getString(R.string.decline)) { _, _ ->
-                Toast.makeText(requireContext(), "Appointment was declined", Toast.LENGTH_SHORT).show()
-                //TODO navigate back
-            }
             .show()
     }
 }

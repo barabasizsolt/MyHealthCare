@@ -35,6 +35,10 @@ android {
 }
 
 dependencies {
+    //Koin DI dependency
+    def koin_version= "3.1.4"
+    implementation "io.insert-koin:koin-android:$koin_version"
+
     //Custom DatePicker dependency
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 
@@ -50,8 +54,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
 
     //Coil dependency
-    implementation "io.coil-kt:coil:1.2.0"
-    implementation "io.coil-kt:coil-svg:1.2.0"
+    implementation "io.coil-kt:coil:1.4.0"
+    implementation "io.coil-kt:coil-svg:1.4.0"
 
     //Glide dependency
     implementation 'com.github.bumptech.glide:glide:4.12.0'

@@ -36,9 +36,8 @@ class MainActivity : AppCompatActivity() {
         profileIcon = topAppBar.menu.findItem(R.id.profile)
 
         initBottomNavigation()
-
+        topAppBar.visibility = View.GONE
         if(mAuth.currentUser == null){
-            topAppBar.visibility = View.GONE
             replaceFragment(LoginFragment(), R.id.fragment_container)
         }
         else{
