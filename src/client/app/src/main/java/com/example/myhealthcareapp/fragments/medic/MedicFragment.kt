@@ -52,9 +52,9 @@ class MedicFragment : BaseFragment(){
         val list : MutableList<Appointment> = mutableListOf()
         for (i in 0 until size) {
             val item = Appointment(i,"asfd",
-                1,
-                1,
-                1,
+                "Policlinica",
+                "Neurology",
+                "Jonny",
                 "2021-12-21 16:30",
                 "2021-12-21 17:00",
                 "ok"
