@@ -39,34 +39,12 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
                 hospitals = response.body()?.data as MutableList
                 setupUI(view)
             }
+            else {
+                Log.e("HospitalError", response.errorBody().toString())
+            }
         })
         return view
     }
-
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        val email = (mActivity as MainActivity).mAuth.currentUser!!.email!!
-//        (mActivity as MainActivity).fireStore.collection("users").document(email).get()
-//            .addOnSuccessListener { document ->
-//                if(document != null){
-//                    val userId = (mActivity as MainActivity).mAuth.currentUser!!.uid
-//                    val firstName = document.data!!["firstName"].toString()
-//                    val lastName = document.data!!["lastName"].toString()
-//                    val personalCode = document.data!!["personalCode"].toString()
-//
-//                    val client = Client(userId, firstName, lastName, email, personalCode)
-//                    Cache.setClient(client)
-//                    Log.d(ContentValues.TAG, client.toString())
-//                    setupUI(view)
-//                }
-//                else{
-//                    Log.d(ContentValues.TAG, "No such user")
-//                }
-//            }
-//            .addOnFailureListener { exception ->
-//                Log.d(ContentValues.TAG, "Get failed with ", exception)
-//            }
-//    }
 
     private fun setupUI(view: View){
         (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
