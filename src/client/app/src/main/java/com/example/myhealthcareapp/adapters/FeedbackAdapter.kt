@@ -1,5 +1,6 @@
 package com.example.myhealthcareapp.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +38,7 @@ class FeedbackAdapter(private var feedbackList : MutableList<Feedback>, private 
         return FeedbackViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FeedbackAdapter.FeedbackViewHolder, position: Int)
     {
         val itemsViewModel = feedbackList[position]
@@ -48,9 +50,9 @@ class FeedbackAdapter(private var feedbackList : MutableList<Feedback>, private 
             .circleCrop()
             .into(holder.medicImage)
 
-        holder.medicName.text = "Dr House1"
-        holder.hospitalName.text = "Policlinica 2"
-        holder.appointmentDate.text = "2021-12-21 16:30-17:00"
+        holder.medicName.text = itemsViewModel.appointment.medicName
+        holder.hospitalName.text = itemsViewModel.appointment.hospitalName
+        holder.appointmentDate.text = itemsViewModel.appointment.scheduleStartDate + ", " + itemsViewModel.appointment.scheduleEndDate
     }
 
 
