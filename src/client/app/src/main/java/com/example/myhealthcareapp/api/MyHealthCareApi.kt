@@ -32,7 +32,6 @@ interface MyHealthCareApi {
     suspend fun getSingleFeedback(
         @Path("id") id : Int
     ): Response<SingleFeedbackResponse>
-    suspend fun getHospitals() : Response<HospitalResponse>
 
     @GET("api/medicaldepartments/hospital/{hospital_id}")
     suspend fun getMedicalDepartments(

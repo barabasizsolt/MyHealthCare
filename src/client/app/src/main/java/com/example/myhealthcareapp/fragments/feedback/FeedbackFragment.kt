@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.MainActivity
@@ -64,7 +63,7 @@ class FeedbackFragment : BaseFragment(), OnItemClickListener {
     override fun onItemClick(position: Int) {
         viewModel.getSingleFeedback(feedbacks[position].feedbackId)
 
-        viewModel.singlefeedback.observe(viewLifecycleOwner, { response ->
+        viewModel.singleFeedback.observe(viewLifecycleOwner, { response ->
             if(response.isSuccessful){
                 Log.d("singlefeedback", response.body().toString())
                 singleFeedback = response.body()?.data!!

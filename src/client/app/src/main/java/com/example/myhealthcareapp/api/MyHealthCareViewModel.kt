@@ -17,7 +17,7 @@ class MyHealthCareViewModel(private val repository: MyHealthCareRepository) : Vi
     val myAppointments: MutableLiveData<Response<MyAppointmentsResponse>> = MutableLiveData()
     val feedbacks: MutableLiveData<Response<FeedbackResponse>> = MutableLiveData()
     val singleAppointment: MutableLiveData<Response<SingleAppointmentResponse>> = MutableLiveData()
-    val singlefeedback: MutableLiveData<Response<SingleFeedbackResponse>> = MutableLiveData()
+    val singleFeedback: MutableLiveData<Response<SingleFeedbackResponse>> = MutableLiveData()
 
     fun loadHospitals() {
         viewModelScope.launch {
@@ -64,7 +64,7 @@ class MyHealthCareViewModel(private val repository: MyHealthCareRepository) : Vi
     fun getSingleFeedback(id : Int) {
         viewModelScope.launch {
             val response = repository.getSingleFeedback(id)
-            singlefeedback.value = response
+            singleFeedback.value = response
         }
     }
 }
