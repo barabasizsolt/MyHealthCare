@@ -1,5 +1,6 @@
 package com.example.myhealthcareapp.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +38,7 @@ class MyAppointmentsAdapter(private var appointmentList : MutableList<Appointmen
         return MyAppointmentsViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyAppointmentsViewHolder, position: Int) {
         val itemsViewModel = appointmentList[position]
 
@@ -47,9 +49,9 @@ class MyAppointmentsAdapter(private var appointmentList : MutableList<Appointmen
             .circleCrop()
             .into(holder.medicImage)
 
-        holder.medicName.text = "Dr House1"
-        holder.hospitalName.text = "Policlinica 2"
-        holder.appointmentDate.text = itemsViewModel.scheduleEndDate + "-" + itemsViewModel.scheduleEndDate.takeLast(5)
+        holder.medicName.text = itemsViewModel.medicName
+        holder.hospitalName.text = itemsViewModel.hospitalName
+        holder.appointmentDate.text = itemsViewModel.scheduleStartDate + ", " + itemsViewModel.scheduleEndDate
 
     }
 
