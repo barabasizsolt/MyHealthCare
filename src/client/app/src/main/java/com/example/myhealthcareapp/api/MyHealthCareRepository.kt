@@ -4,6 +4,7 @@ import com.example.myhealthcareapp.models.response.*
 import com.example.myhealthcareapp.models.response.HospitalResponse
 import com.example.myhealthcareapp.models.response.MedicalDepartmentResponse
 import com.example.myhealthcareapp.models.response.MedicsResponse
+import com.example.myhealthcareapp.models.user.Client
 import retrofit2.Response
 
 class MyHealthCareRepository(private val instance: MyHealthCareInstance) {
@@ -33,5 +34,13 @@ class MyHealthCareRepository(private val instance: MyHealthCareInstance) {
 
     suspend fun getSingleFeedback(id : Int) : Response<SingleFeedbackResponse> {
         return instance.api.getSingleFeedback(id)
+    }
+
+    suspend fun registration(registerClient: Client) : Response<RegisterResponse> {
+        return instance.api.registerClient(registerClient)
+    }
+
+    suspend fun getClient(email: String) : Response<ClientResponse> {
+        return instance.api.getClient(email)
     }
 }

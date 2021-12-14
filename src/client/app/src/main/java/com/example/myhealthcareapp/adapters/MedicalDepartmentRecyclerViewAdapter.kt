@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.MedicalDepartment
+import com.example.myhealthcareapp.models.response.MedicalDepartment
 import kotlinx.android.synthetic.main.medical_department_recyclerview_element.view.*
 
 class MedicalDepartmentRecyclerViewAdapter(

@@ -13,7 +13,7 @@ import com.example.myhealthcareapp.adapters.FeedbackAdapter
 import com.example.myhealthcareapp.api.MyHealthCareViewModel
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.Feedback
+import com.example.myhealthcareapp.models.response.Feedback
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel

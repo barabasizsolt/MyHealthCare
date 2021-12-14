@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.Feedback
+import com.example.myhealthcareapp.models.response.Feedback
 import kotlinx.android.synthetic.main.my_appointments_recyclerview_element.view.*
 
 class FeedbackAdapter(private var feedbackList : MutableList<Feedback>, private val listener : OnItemClickListener) : RecyclerView.Adapter<FeedbackAdapter.FeedbackViewHolder>() {

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.Medic
+import com.example.myhealthcareapp.models.response.Medic
 
 class BookAppointmentAdapter(private val mList: List<Medic>, private val listener : OnItemClickListener) : RecyclerView.Adapter<BookAppointmentAdapter.ViewHolder>() {
     private var selectedPosition = 0

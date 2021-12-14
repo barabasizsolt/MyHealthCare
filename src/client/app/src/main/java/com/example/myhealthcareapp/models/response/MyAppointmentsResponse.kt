@@ -1,6 +1,5 @@
 package com.example.myhealthcareapp.models.response
 
-import com.example.myhealthcareapp.models.Appointment
 import com.google.gson.annotations.SerializedName
 
 data class MyAppointmentsResponse(

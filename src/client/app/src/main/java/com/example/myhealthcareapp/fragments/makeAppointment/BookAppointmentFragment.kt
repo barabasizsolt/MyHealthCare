@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.BookAppointmentAdapter
-import com.example.myhealthcareapp.models.Medic
+import com.example.myhealthcareapp.models.response.Medic
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import android.util.Log

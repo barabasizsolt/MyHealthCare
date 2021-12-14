@@ -1,5 +1,6 @@
 package com.example.myhealthcareapp.fragments.makeAppointment
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,11 +14,12 @@ import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.HospitalRecyclerViewAdapter
 import com.example.myhealthcareapp.api.MyHealthCareViewModel
+import com.example.myhealthcareapp.cache.Cache
 import com.example.myhealthcareapp.constants.Constant.HospitalId
 import com.example.myhealthcareapp.constants.Constant.HospitalName
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.Hospital
+import com.example.myhealthcareapp.models.response.Hospital
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
@@ -33,17 +35,31 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_hospital_list, container, false)
-        viewModel.loadHospitals()
+
         viewModel.hospitals.observe(viewLifecycleOwner, { response ->
             if(response.isSuccessful) {
                 Log.d("Hospitals", response.body()?.data?.size.toString())
                 hospitals = response.body()?.data as MutableList
-                setupUI(view)
+                val email = (mActivity as MainActivity).mAuth.currentUser?.email
+                if (email != null) {
+                    viewModel.getClient(email)
+                }
             }
             else {
                 Log.e("HospitalError", response.errorBody().toString())
             }
         })
+
+        viewModel.client.observe(viewLifecycleOwner, { response ->
+            if(response.isSuccessful) {
+                response.body()?.let { Cache.setClient(it.data) }
+                Log.d("Client", response.body().toString())
+                setupUI(view)
+            }
+        })
+
+        viewModel.loadHospitals()
+
         return view
     }
 

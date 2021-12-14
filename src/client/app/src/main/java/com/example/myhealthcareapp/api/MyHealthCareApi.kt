@@ -4,10 +4,9 @@ import com.example.myhealthcareapp.models.response.*
 import com.example.myhealthcareapp.models.response.HospitalResponse
 import com.example.myhealthcareapp.models.response.MedicalDepartmentResponse
 import com.example.myhealthcareapp.models.response.MedicsResponse
+import com.example.myhealthcareapp.models.user.Client
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface MyHealthCareApi {
     @GET("api/hospitals")
@@ -42,4 +41,14 @@ interface MyHealthCareApi {
     suspend fun getMedics(
         @Path("medical_dep_id") medical_dep_id : Int
     ) : Response<MedicsResponse>
+
+    @POST("api/client/registerClient")
+    suspend fun registerClient(
+        @Body client: Client
+    ) : Response<RegisterResponse>
+
+    @GET("api/client/{id}")
+    suspend fun getClient(
+        @Path("id") email : String
+    ) : Response<ClientResponse>
 }

@@ -7,6 +7,7 @@ import com.example.myhealthcareapp.models.response.HospitalResponse
 import com.example.myhealthcareapp.models.response.MedicalDepartmentResponse
 import com.example.myhealthcareapp.models.response.MedicsResponse
 import com.example.myhealthcareapp.models.response.*
+import com.example.myhealthcareapp.models.user.Client
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -18,6 +19,8 @@ class MyHealthCareViewModel(private val repository: MyHealthCareRepository) : Vi
     val feedbacks: MutableLiveData<Response<FeedbackResponse>> = MutableLiveData()
     val singleAppointment: MutableLiveData<Response<SingleAppointmentResponse>> = MutableLiveData()
     val singleFeedback: MutableLiveData<Response<SingleFeedbackResponse>> = MutableLiveData()
+    val registration: MutableLiveData<Response<RegisterResponse>> = MutableLiveData()
+    val client: MutableLiveData<Response<ClientResponse>> = MutableLiveData()
 
     fun loadHospitals() {
         viewModelScope.launch {
@@ -65,6 +68,20 @@ class MyHealthCareViewModel(private val repository: MyHealthCareRepository) : Vi
         viewModelScope.launch {
             val response = repository.getSingleFeedback(id)
             singleFeedback.value = response
+        }
+    }
+
+    fun registerClient(registerClient: Client) {
+        viewModelScope.launch {
+            val response = repository.registration(registerClient)
+            registration.value = response
+        }
+    }
+
+    fun getClient(email: String){
+        viewModelScope.launch {
+            val response = repository.getClient(email)
+            client.value = response
         }
     }
 }

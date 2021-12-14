@@ -6,21 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
-import android.content.ContentValues
 import android.util.Log
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.adapters.MyAppointmentsAdapter
 import com.example.myhealthcareapp.api.MyHealthCareViewModel
-import com.example.myhealthcareapp.cache.Cache
-import com.example.myhealthcareapp.models.user.Client
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.myhealthcareapp.fragments.BaseFragment
-import com.example.myhealthcareapp.fragments.profile.ProfileFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.Appointment
+import com.example.myhealthcareapp.models.response.Appointment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

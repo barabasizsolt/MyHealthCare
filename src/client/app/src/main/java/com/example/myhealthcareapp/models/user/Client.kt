@@ -1,9 +1,16 @@
 package com.example.myhealthcareapp.models.user
 
+import com.google.gson.annotations.SerializedName
+
 data class Client (
-    val clientId: String,
-    val clientFirstName: String,
-    val clientLastName: String,
-    val clientEmail: String,
-    val clientPersonalCode: String
-    )
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("address")
+    val personalCode: String,
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("password")
+    val password: String
+)

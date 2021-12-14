@@ -10,7 +10,7 @@ import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.MedicAppointmentAdapter
 import com.example.myhealthcareapp.fragments.BaseFragment
-import com.example.myhealthcareapp.models.Appointment
+import com.example.myhealthcareapp.models.response.Appointment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MedicFragment : BaseFragment(){
