@@ -47,8 +47,13 @@ interface MyHealthCareApi {
         @Body client: Client
     ) : Response<RegisterResponse>
 
-    @GET("api/client/{id}")
+    @GET("api/client/{email}")
     suspend fun getClient(
-        @Path("id") email : String
+        @Path("email") email : String
     ) : Response<ClientResponse>
+
+    @GET("/api/appointments/medicDates/{medic_id}")
+    suspend fun getMedicDates(
+        @Path("medic_id") medicId : String
+    ) : Response<AvailableDateResponse>
 }

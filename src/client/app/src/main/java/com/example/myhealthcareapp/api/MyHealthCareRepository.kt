@@ -43,4 +43,8 @@ class MyHealthCareRepository(private val instance: MyHealthCareInstance) {
     suspend fun getClient(email: String) : Response<ClientResponse> {
         return instance.api.getClient(email)
     }
+
+    suspend fun getMedicDates(medicId: String) : Response<AvailableDateResponse> {
+        return instance.api.getMedicDates(medicId)
+    }
 }

@@ -69,8 +69,8 @@ class HospitalListFragment : BaseFragment(), OnItemClickListener {
     }
 
     private fun setupUI(view: View){
-        (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
         (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.select_hospital)
+        (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
         (mActivity as MainActivity).bottomNavigation.visibility = View.VISIBLE
         (mActivity as MainActivity).searchIcon.isVisible = true
         (mActivity as MainActivity).profileIcon.isVisible = true

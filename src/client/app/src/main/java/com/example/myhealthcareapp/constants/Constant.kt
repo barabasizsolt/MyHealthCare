@@ -1,6 +1,5 @@
 package com.example.myhealthcareapp.constants
 
-import android.widget.Toast
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -9,6 +8,8 @@ object Constant {
 
     const val HospitalName = "HospitalName"
     const val HospitalId = "HospitalId"
+
+    const val CLIENT_ID = 1
 
     fun getDate(timeStamp: Long): String? {
         val formatter = SimpleDateFormat("MMM dd, yyy", Locale.getDefault())

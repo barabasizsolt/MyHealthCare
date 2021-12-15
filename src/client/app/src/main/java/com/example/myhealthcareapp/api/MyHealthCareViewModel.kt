@@ -21,6 +21,7 @@ class MyHealthCareViewModel(private val repository: MyHealthCareRepository) : Vi
     val singleFeedback: MutableLiveData<Response<SingleFeedbackResponse>> = MutableLiveData()
     val registration: MutableLiveData<Response<RegisterResponse>> = MutableLiveData()
     val client: MutableLiveData<Response<ClientResponse>> = MutableLiveData()
+    val medicDates: MutableLiveData<Response<AvailableDateResponse>> = MutableLiveData()
 
     fun loadHospitals() {
         viewModelScope.launch {
@@ -82,6 +83,13 @@ class MyHealthCareViewModel(private val repository: MyHealthCareRepository) : Vi
         viewModelScope.launch {
             val response = repository.getClient(email)
             client.value = response
+        }
+    }
+
+    fun getMedicDates(medicId: String){
+        viewModelScope.launch {
+            val response = repository.getMedicDates(medicId)
+            medicDates.value = response
         }
     }
 }

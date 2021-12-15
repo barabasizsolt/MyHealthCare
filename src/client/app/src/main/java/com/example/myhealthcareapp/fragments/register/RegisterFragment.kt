@@ -20,7 +20,7 @@ import com.example.myhealthcareapp.fragments.login.LoginFragment
 import com.example.myhealthcareapp.models.user.Client
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterFragment : BaseFragment() {
     private lateinit var firstName: TextView
@@ -37,7 +37,7 @@ class RegisterFragment : BaseFragment() {
     private lateinit var loginTextView: TextView
     private lateinit var progressBar : ProgressBar
 
-    private val viewModel by sharedViewModel<MyHealthCareViewModel>()
+    private val viewModel by viewModel<MyHealthCareViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,7 +92,7 @@ class RegisterFragment : BaseFragment() {
                             (mActivity as MainActivity).fireStore.collection("users").document(email.text.toString()).set(user)
                                 .addOnSuccessListener {
                                     val client = Client(
-                                        id = 10,
+                                        id = Constant.CLIENT_ID,
                                         name = firstName.text.toString() + " " + lastName.text.toString(),
                                         personalCode = personalCode.text.toString(),
                                         email = email.text.toString(),
