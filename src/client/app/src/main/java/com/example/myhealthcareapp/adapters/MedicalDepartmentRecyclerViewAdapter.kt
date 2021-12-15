@@ -1,26 +1,41 @@
 package com.example.myhealthcareapp.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.Hospital
-import com.example.myhealthcareapp.models.MedicalDepartment
+import com.example.myhealthcareapp.models.response.MedicalDepartment
 import kotlinx.android.synthetic.main.medical_department_recyclerview_element.view.*
 
-class MedicalDepartmentRecyclerViewAdapter(private var medicalDepartmentList: MutableList<MedicalDepartment>, private val listener : OnItemClickListener)  : RecyclerView.Adapter<MedicalDepartmentRecyclerViewAdapter.MedicalDepartmentRecyclerViewViewHolder>() {
+class MedicalDepartmentRecyclerViewAdapter(
+    private val listener : OnItemClickListener
+    )
+    : ListAdapter<MedicalDepartment, MedicalDepartmentRecyclerViewAdapter.MedicalDepartmentRecyclerViewViewHolder>(
+        object: DiffUtil.ItemCallback<MedicalDepartment>(){
+            override fun areItemsTheSame(
+                oldItem: MedicalDepartment,
+                newItem: MedicalDepartment
+            ) = oldItem.medicalDepartmentId == newItem.medicalDepartmentId
+
+            override fun areContentsTheSame(
+                oldItem: MedicalDepartment,
+                newItem: MedicalDepartment
+            ) = oldItem == newItem
+        }
+    )
+{
 
     inner class MedicalDepartmentRecyclerViewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
         val medicalDepartmentImage : ImageView = itemView.medical_department_image
         val medicalDepartmentName : TextView = itemView.medical_department_name
         val medicalDepartmentPhoneNumber : TextView = itemView.medical_department_phone_number
-        val medicalDepartmentAddress : TextView = itemView.medical_department_address
 
         init{
             itemView.setOnClickListener(this)
@@ -42,7 +57,7 @@ class MedicalDepartmentRecyclerViewAdapter(private var medicalDepartmentList: Mu
 
 
     override fun onBindViewHolder(holder: MedicalDepartmentRecyclerViewViewHolder, position: Int) {
-        val currentMedicalDepartment = medicalDepartmentList[position]
+        val currentMedicalDepartment = getItem(position)
 
         if(position % 2 == 0){
             Glide.with(holder.itemView.context)
@@ -57,16 +72,5 @@ class MedicalDepartmentRecyclerViewAdapter(private var medicalDepartmentList: Mu
 
         holder.medicalDepartmentName.text = currentMedicalDepartment.medicalDepartmentName
         holder.medicalDepartmentPhoneNumber.text = currentMedicalDepartment.medicalDepartmentPhoneNumber
-        holder.medicalDepartmentAddress.text = currentMedicalDepartment.medicalDepartmentAddress
-    }
-
-    override fun getItemCount(): Int = medicalDepartmentList.size
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun filterList(filterList: MutableList<MedicalDepartment>) {
-        // below line is to add our filtered list
-        this.medicalDepartmentList = filterList
-        // below line is to notify our adapter as change in recycler view data
-        notifyDataSetChanged()
     }
 }

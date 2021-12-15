@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.Appointment
+import com.example.myhealthcareapp.models.response.ClientAppointmentResponse
 import kotlinx.android.synthetic.main.my_appointments_recyclerview_element.view.*
 
-class MyAppointmentsAdapter(private var appointmentList : MutableList<Appointment>, private val listener : OnItemClickListener) : RecyclerView.Adapter<MyAppointmentsAdapter.MyAppointmentsViewHolder>() {
+class MyAppointmentsAdapter(private var appointmentList : MutableList<ClientAppointmentResponse>, private val listener : OnItemClickListener) : RecyclerView.Adapter<MyAppointmentsAdapter.MyAppointmentsViewHolder>() {
 
     inner class MyAppointmentsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val medicImage : ImageView = itemView.medic_image

@@ -8,10 +8,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.R
-import com.example.myhealthcareapp.models.Appointment
+import com.example.myhealthcareapp.models.response.MakeAppointment
 import kotlinx.android.synthetic.main.medic_appointment_element.view.*
 
-class MedicAppointmentAdapter(private var appointmentList : MutableList<Appointment>) : RecyclerView.Adapter<MedicAppointmentAdapter.MedicAppointmentViewHolder>() {
+class MedicAppointmentAdapter(private var appointmentList : MutableList<MakeAppointment>) : RecyclerView.Adapter<MedicAppointmentAdapter.MedicAppointmentViewHolder>() {
 
     inner class MedicAppointmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val patientName : TextView = itemView.patient_name

@@ -6,6 +6,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
+import com.example.myhealthcareapp.api.MyHealthCareInstance
+import com.example.myhealthcareapp.api.MyHealthCareRepository
+import com.example.myhealthcareapp.api.MyHealthCareViewModel
 import com.example.myhealthcareapp.fragments.feedback.FeedbackFragment
 import com.example.myhealthcareapp.fragments.login.LoginFragment
 import com.example.myhealthcareapp.fragments.makeAppointment.HospitalListFragment
@@ -16,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var mAuth: FirebaseAuth
@@ -23,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var searchView : SearchView
     lateinit var searchIcon: MenuItem
     lateinit var profileIcon: MenuItem
+    lateinit var viewModel: MyHealthCareViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
         fireStore = Firebase.firestore
+        viewModel = MyHealthCareViewModel(MyHealthCareRepository(MyHealthCareInstance()))
         bottomNavigation.visibility = View.GONE
         searchView = findViewById(R.id.search_button)
         searchIcon = topAppBar.menu.findItem(R.id.search)

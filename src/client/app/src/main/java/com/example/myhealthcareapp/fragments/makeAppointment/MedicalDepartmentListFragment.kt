@@ -1,6 +1,7 @@
 package com.example.myhealthcareapp.fragments.makeAppointment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,21 +13,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.MedicalDepartmentRecyclerViewAdapter
+import com.example.myhealthcareapp.api.MyHealthCareViewModel
 import com.example.myhealthcareapp.constants.Constant.HospitalId
 import com.example.myhealthcareapp.constants.Constant.HospitalName
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.MedicalDepartment
+import com.example.myhealthcareapp.models.response.MedicalDepartment
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
-import kotlin.properties.Delegates
 
-
-class MedicalDepartmentListFragment() : BaseFragment(), OnItemClickListener {
-    private lateinit var exampleList: MutableList<MedicalDepartment>
+class MedicalDepartmentListFragment : BaseFragment(), OnItemClickListener {
+    private lateinit var departments: MutableList<MedicalDepartment>
     private lateinit var medicalDepartmentAdapter: MedicalDepartmentRecyclerViewAdapter
     private lateinit var selectedHospital: TextView
     private lateinit var recyclerView: RecyclerView
+    private val viewModel by sharedViewModel<MyHealthCareViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,26 +37,33 @@ class MedicalDepartmentListFragment() : BaseFragment(), OnItemClickListener {
         val view = inflater.inflate(R.layout.fragment_medical_department_list, container, false)
 
         selectedHospital = view.findViewById(R.id.selected_hospital_name)
-        recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView = view.findViewById(R.id.recycler_view)
 
+        selectedHospital.text = arguments?.getString(HospitalName)
+        arguments?.getInt(HospitalId)?.let { viewModel.loadDepartments(it) }
+        viewModel.departments.observe(viewLifecycleOwner, { response ->
+            if(response.isSuccessful) {
+                departments = response.body()?.data as MutableList
+                Log.d("Departments", departments.toString())
+                setupUI()
+            }
+        })
+
+        return view
+    }
+
+    private fun setupUI(){
         (mActivity as MainActivity).searchView.queryHint = (mActivity).getString(R.string.department_hint)
         (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.select_department)
         (mActivity as MainActivity).bottomNavigation.visibility = View.VISIBLE
         (mActivity as MainActivity).searchIcon.isVisible = true
         (mActivity as MainActivity).profileIcon.isVisible = true
 
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        selectedHospital.text = arguments?.getString(HospitalName)
-        exampleList = generateDummyList(20, arguments?.getInt(HospitalId)!!)
-        medicalDepartmentAdapter = MedicalDepartmentRecyclerViewAdapter(exampleList, this)
+        medicalDepartmentAdapter = MedicalDepartmentRecyclerViewAdapter(this)
         recyclerView.adapter = medicalDepartmentAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
+        medicalDepartmentAdapter.submitList(departments)
 
         (mActivity as MainActivity).searchIcon.setOnMenuItemClickListener{
             (mActivity as MainActivity).searchView.visibility = View.VISIBLE
@@ -81,31 +90,27 @@ class MedicalDepartmentListFragment() : BaseFragment(), OnItemClickListener {
         }
     }
 
-    private fun generateDummyList(size: Int, id: Int?): MutableList<MedicalDepartment> {
-
-        val list : MutableList<MedicalDepartment> = mutableListOf()
-        for (i in 0 until size) {
-            val item = MedicalDepartment(i,"Neurology_$id" + "_$i",
-                "0744077777",
-                "Floor 3, room 314",
-                "asdf",
-                id
-            )
-            list += item
-        }
-
-        return list
-    }
-
     override fun onItemClick(position: Int) {
-        (mActivity as MainActivity).replaceFragment(BookAppointmentFragment(), R.id.fragment_container, true)
+        val selectedHospitalName = arguments?.getString(HospitalName)
+        val hospitalId = arguments?.getInt(HospitalId)
+        val departmentName = departments[position].medicalDepartmentName
+        val departmentId = departments[position].medicalDepartmentId
+
+        val fragment = BookAppointmentFragment()
+        val bundle = Bundle()
+        bundle.putString("hospitalName", selectedHospitalName)
+        bundle.putString("hospitalId", hospitalId.toString())
+        bundle.putString("departmentName", departmentName)
+        bundle.putString("departmentId", departmentId.toString())
+        fragment.arguments = bundle
+
+        (mActivity as MainActivity).replaceFragment(fragment, R.id.fragment_container, true)
     }
 
     private fun filter(text: String?) {
         val filteredList: MutableList<MedicalDepartment> = mutableListOf()
 
-        for (item in exampleList) {
-            // checking if the entered string matched with any item of our recycler view.
+        for (item in departments) {
             if (text != null) {
                 if (item.medicalDepartmentName.lowercase(Locale.getDefault()).contains(text.lowercase(Locale.getDefault()))) {
                     filteredList.add(item)
@@ -115,6 +120,6 @@ class MedicalDepartmentListFragment() : BaseFragment(), OnItemClickListener {
         if (filteredList.isEmpty())
             Toast.makeText(context, "No Data Found", Toast.LENGTH_SHORT).show()
 
-        medicalDepartmentAdapter.filterList(filteredList)
+        medicalDepartmentAdapter.submitList(filteredList)
     }
 }

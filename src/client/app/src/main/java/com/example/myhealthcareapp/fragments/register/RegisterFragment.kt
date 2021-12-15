@@ -1,9 +1,6 @@
 package com.example.myhealthcareapp.fragments.register
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +10,15 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
+import com.example.myhealthcareapp.api.MyHealthCareViewModel
 import com.example.myhealthcareapp.constants.Constant
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.fragments.makeAppointment.HospitalListFragment
 import com.example.myhealthcareapp.fragments.login.LoginFragment
+import com.example.myhealthcareapp.models.user.Client
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterFragment : BaseFragment() {
     private lateinit var firstName: TextView
@@ -34,6 +34,8 @@ class RegisterFragment : BaseFragment() {
     private lateinit var registerButton: Button
     private lateinit var loginTextView: TextView
     private lateinit var progressBar : ProgressBar
+
+    private val viewModel by viewModel<MyHealthCareViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,15 +63,17 @@ class RegisterFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.registration.observe(viewLifecycleOwner, { response ->
+            if(response.isSuccessful) {
+                Toast.makeText(requireActivity(), "Successfully Registered", Toast.LENGTH_LONG).show()
+                (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
+                (mActivity as MainActivity).replaceFragment(HospitalListFragment(), R.id.fragment_container)
+            }
+        })
+
         registerButton.setOnClickListener {
             if(validateInput()){
                 progressBar.visibility = View.VISIBLE
-
-                val user = hashMapOf(
-                    "firstName" to firstName.text.toString(),
-                    "lastName" to lastName.text.toString(),
-                    "personalCode" to personalCode.text.toString()
-                )
 
                 (mActivity as MainActivity).mAuth
                     .createUserWithEmailAndPassword(email.text.toString(), password.text.toString())
@@ -77,20 +81,16 @@ class RegisterFragment : BaseFragment() {
                         requireActivity()
                     ) { task ->
                         if (task.isSuccessful) {
-                            (mActivity as MainActivity).fireStore.collection("users").document(email.text.toString()).set(user)
-                                .addOnSuccessListener {
-                                    Toast.makeText(requireActivity(), "Successfully Registered", Toast.LENGTH_LONG).show()
-                                    (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
-                                    (mActivity as MainActivity).replaceFragment(HospitalListFragment(), R.id.fragment_container)
-                                }
-                                .addOnFailureListener { e ->
-                                    Log.w(TAG, "Some error occurred during registration", e)
-                                }
+                            val client = Client(
+                                id = Constant.CLIENT_ID,
+                                name = firstName.text.toString() + " " + lastName.text.toString(),
+                                personalCode = personalCode.text.toString(),
+                                email = email.text.toString(),
+                                password = password.text.toString()
+                            )
+                            viewModel.registerClient(client)
                         } else {
-                            Log.d(TAG, task.exception?.message.toString())
                             Toast.makeText(requireActivity(), "Registration Failed", Toast.LENGTH_LONG).show()
-                            Log.d(TAG, email.text.toString())
-                            Log.d(TAG, password.text.toString())
                         }
 
                         progressBar.visibility = View.INVISIBLE

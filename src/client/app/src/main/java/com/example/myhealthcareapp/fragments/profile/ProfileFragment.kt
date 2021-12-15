@@ -48,10 +48,11 @@ class ProfileFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val client = Cache.getClient()
-        clientFirstName.text = client.clientFirstName
-        clientLastName.text = client.clientLastName
-        clientPersonalCode.text = client.clientPersonalCode
-        clientEmail.text = client.clientEmail
+        val name = client.name.split(" ").toTypedArray()
+        clientFirstName.text = name[0]
+        clientLastName.text = name[1]
+        clientPersonalCode.text = client.personalCode
+        clientEmail.text = client.email
         clientRegistrationDate.text = getDate((activity as MainActivity).mAuth.currentUser?.metadata?.creationTimestamp!!)
         logoutButton.setOnClickListener{
             (mActivity as MainActivity).mAuth.signOut()

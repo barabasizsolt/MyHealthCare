@@ -13,47 +13,68 @@ import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.HospitalRecyclerViewAdapter
 import com.example.myhealthcareapp.api.MyHealthCareViewModel
+import com.example.myhealthcareapp.cache.Cache
 import com.example.myhealthcareapp.constants.Constant.HospitalId
 import com.example.myhealthcareapp.constants.Constant.HospitalName
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.Hospital
+import com.example.myhealthcareapp.models.response.Hospital
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
 
 class HospitalListFragment : BaseFragment(), OnItemClickListener {
     private lateinit var hospitals: MutableList<Hospital>
+    private lateinit var recyclerview: RecyclerView
     private lateinit var adapter : HospitalRecyclerViewAdapter
-    private val viewModel by viewModel<MyHealthCareViewModel>()
+    private val viewModel by sharedViewModel<MyHealthCareViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_hospital_list, container, false)
-        viewModel.loadHospitals()
+
         viewModel.hospitals.observe(viewLifecycleOwner, { response ->
             if(response.isSuccessful) {
-                Log.d("Hospitals", response.body()?.data.toString())
+                Log.d("Hospitals", response.body()?.data?.size.toString())
                 hospitals = response.body()?.data as MutableList
-                setupUI(view)
+                val email = (mActivity as MainActivity).mAuth.currentUser?.email
+                if (email != null) {
+                    viewModel.getClient(email)
+                }
             }
             else {
                 Log.e("HospitalError", response.errorBody().toString())
             }
         })
+
+        viewModel.client.observe(viewLifecycleOwner, { response ->
+            if(response.isSuccessful) {
+                response.body()?.let { Cache.setClient(it.data) }
+                Log.d("Client", response.body().toString())
+                setupUI(view)
+            }
+        })
+
+        viewModel.loadHospitals()
+
         return view
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.hospitals.removeObservers(viewLifecycleOwner)
+    }
+
     private fun setupUI(view: View){
-        (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
         (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.select_hospital)
+        (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
         (mActivity as MainActivity).bottomNavigation.visibility = View.VISIBLE
         (mActivity as MainActivity).searchIcon.isVisible = true
         (mActivity as MainActivity).profileIcon.isVisible = true
 
-        val recyclerview = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerview = view.findViewById(R.id.recycler_view)
         adapter = HospitalRecyclerViewAdapter(hospitals, this)
         recyclerview.adapter = adapter
         recyclerview.layoutManager = LinearLayoutManager(context)
