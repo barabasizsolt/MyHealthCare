@@ -1,8 +1,6 @@
 package com.example.myhealthcareapp.fragments.register
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,37 +75,22 @@ class RegisterFragment : BaseFragment() {
             if(validateInput()){
                 progressBar.visibility = View.VISIBLE
 
-                val user = hashMapOf(
-                    "firstName" to firstName.text.toString(),
-                    "lastName" to lastName.text.toString(),
-                    "personalCode" to personalCode.text.toString()
-                )
-
                 (mActivity as MainActivity).mAuth
                     .createUserWithEmailAndPassword(email.text.toString(), password.text.toString())
                     .addOnCompleteListener(
                         requireActivity()
                     ) { task ->
                         if (task.isSuccessful) {
-                            (mActivity as MainActivity).fireStore.collection("users").document(email.text.toString()).set(user)
-                                .addOnSuccessListener {
-                                    val client = Client(
-                                        id = Constant.CLIENT_ID,
-                                        name = firstName.text.toString() + " " + lastName.text.toString(),
-                                        personalCode = personalCode.text.toString(),
-                                        email = email.text.toString(),
-                                        password = password.text.toString()
-                                    )
-                                    viewModel.registerClient(client)
-                                }
-                                .addOnFailureListener { e ->
-                                    Log.w(TAG, "Some error occurred during registration", e)
-                                }
+                            val client = Client(
+                                id = Constant.CLIENT_ID,
+                                name = firstName.text.toString() + " " + lastName.text.toString(),
+                                personalCode = personalCode.text.toString(),
+                                email = email.text.toString(),
+                                password = password.text.toString()
+                            )
+                            viewModel.registerClient(client)
                         } else {
-                            Log.d(TAG, task.exception?.message.toString())
                             Toast.makeText(requireActivity(), "Registration Failed", Toast.LENGTH_LONG).show()
-                            Log.d(TAG, email.text.toString())
-                            Log.d(TAG, password.text.toString())
                         }
 
                         progressBar.visibility = View.INVISIBLE

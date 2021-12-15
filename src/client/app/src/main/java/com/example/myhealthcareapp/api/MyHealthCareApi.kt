@@ -15,22 +15,12 @@ interface MyHealthCareApi {
     @GET("api/appointments/client/{id}")
     suspend fun getAppointments(
         @Path("id") id : Int
-    ): Response<MyAppointmentsResponse>
+    ): Response<ClientAppointments>
 
     @GET("api/feedbacks/client/{id}")
     suspend fun getFeedbacks(
         @Path("id") id : Int
-    ): Response<FeedbackResponse>
-
-    @GET("api/appointments/{id}")
-    suspend fun getSingleAppointment(
-        @Path("id") id : Int
-    ): Response<SingleAppointmentResponse>
-
-    @GET("api/feedbacks/{id}")
-    suspend fun getSingleFeedback(
-        @Path("id") id : Int
-    ): Response<SingleFeedbackResponse>
+    ): Response<FeedBacksAppointmentResponse>
 
     @GET("api/medicaldepartments/hospital/{hospital_id}")
     suspend fun getMedicalDepartments(
@@ -56,4 +46,9 @@ interface MyHealthCareApi {
     suspend fun getMedicDates(
         @Path("medic_id") medicId : String
     ) : Response<AvailableDateResponse>
+
+    @POST("api/appointments/makeAppointment")
+    suspend fun makeAppointment(
+        @Body appointment: MakeAppointment
+    ) : Response<MakeAppointmentResponse>
 }

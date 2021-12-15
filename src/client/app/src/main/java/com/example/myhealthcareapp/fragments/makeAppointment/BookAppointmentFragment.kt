@@ -16,10 +16,12 @@ import android.util.Log
 import android.widget.Toast
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.api.MyHealthCareViewModel
+import com.example.myhealthcareapp.cache.Cache
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.fragments.myAppointments.MyAppointmentsFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
 import com.example.myhealthcareapp.models.CustomDate
+import com.example.myhealthcareapp.models.response.MakeAppointment
 import com.example.myhealthcareapp.models.response.AvailableDate
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
@@ -118,6 +120,14 @@ class BookAppointmentFragment : BaseFragment(),
                 medicDates = response.body()?.data as MutableList
                 //TODO: populate datePicker
                 getFreeDays()
+            }
+        })
+
+        viewModel.makeAppointment.observe(viewLifecycleOwner, { response ->
+            if(response.isSuccessful){
+                Toast.makeText(requireContext(), "Appointment added", Toast.LENGTH_SHORT).show()
+                (mActivity as MainActivity).replaceFragment(MyAppointmentsFragment(), R.id.fragment_container)
+                (mActivity as MainActivity).bottomNavigation.selectedItemId = R.id.my_appointments
             }
         })
 
@@ -225,11 +235,25 @@ class BookAppointmentFragment : BaseFragment(),
         }
         bookAppointment.setOnClickListener {
             if(validateInput()){
+                val appointmentDates = appointmentTime.text.split(" - ")
+                val startDate = appointmentDate.text.toString() + ", " + appointmentDates[0]
+                val endDate = appointmentDate.text.toString() + ", " + appointmentDates[1]
+
                 val summary = arrayOf(
-                    "Hospital: " + "Policlinica 2", //Hospital name,
-                    "Department: " + "Neurology", //Department name,
-                    "Medic: " + currentMedic.name, //Medic name
-                    "Date & Time: " + appointmentDate.text + ", " + appointmentTime.text, //Appointment date & time
+                    "Hospital: $currentHospitalName",
+                    "Department: $currentDepartmentName",
+                    "Medic: " + currentMedic.name,
+                    "Date & Time: " + appointmentDate.text + ", " + appointmentDates[0] + " - " + appointmentDates[1],
+                )
+
+                val appointment = MakeAppointment(
+                    clientId = Cache.getClient().id.toString(),
+                    hospitalId = currentHospitalId,
+                    medicalDepartmentId = currentDepartmentId,
+                    medicId = currentMedic.id.toString(),
+                    scheduleStartDate = startDate,
+                    scheduleEndDate = endDate,
+                    notes = "Note is empty"
                 )
 
                 MaterialAlertDialogBuilder(requireContext())
@@ -237,9 +261,7 @@ class BookAppointmentFragment : BaseFragment(),
                     .setItems(summary) {_, _ ->}
                     .setNeutralButton(resources.getString(R.string.cancel)) { _, _ -> }
                     .setPositiveButton(resources.getString(R.string.accept)) { _, _ ->
-                        Toast.makeText(requireContext(), "Appointment added", Toast.LENGTH_SHORT).show()
-                        (mActivity as MainActivity).replaceFragment(MyAppointmentsFragment(), R.id.fragment_container)
-                        (mActivity as MainActivity).bottomNavigation.selectedItemId = R.id.my_appointments
+                        viewModel.makeAppointment(appointment)
                     }
                     .show()
             }

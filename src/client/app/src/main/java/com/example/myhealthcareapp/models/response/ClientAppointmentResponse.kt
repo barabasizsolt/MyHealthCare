@@ -2,13 +2,13 @@ package com.example.myhealthcareapp.models.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Appointment (
+data class ClientAppointmentResponse (
     @SerializedName("id")
-    val appointmentId : Int,
+    val id : Int,
     @SerializedName("client_name")
     val clientName : String,
     @SerializedName("hospital_name")
-    val hospitalName : String,
+    val hospitalName: String,
     @SerializedName("medical_department_name")
     val medicalDepartmentName : String,
     @SerializedName("medic_name")
@@ -19,4 +19,4 @@ data class Appointment (
     val scheduleEndDate : String,
     @SerializedName("notes")
     val notes : String
-)
+    )

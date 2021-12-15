@@ -15,13 +15,12 @@ class MyHealthCareViewModel(private val repository: MyHealthCareRepository) : Vi
     val hospitals: MutableLiveData<Response<HospitalResponse>> = MutableLiveData()
     val departments: MutableLiveData<Response<MedicalDepartmentResponse>> = MutableLiveData()
     val medics: MutableLiveData<Response<MedicsResponse>> = MutableLiveData()
-    val myAppointments: MutableLiveData<Response<MyAppointmentsResponse>> = MutableLiveData()
-    val feedbacks: MutableLiveData<Response<FeedbackResponse>> = MutableLiveData()
-    val singleAppointment: MutableLiveData<Response<SingleAppointmentResponse>> = MutableLiveData()
-    val singleFeedback: MutableLiveData<Response<SingleFeedbackResponse>> = MutableLiveData()
+    val myAppointments: MutableLiveData<Response<ClientAppointments>> = MutableLiveData()
+    val feedbacks: MutableLiveData<Response<FeedBacksAppointmentResponse>> = MutableLiveData()
     val registration: MutableLiveData<Response<RegisterResponse>> = MutableLiveData()
     val client: MutableLiveData<Response<ClientResponse>> = MutableLiveData()
     val medicDates: MutableLiveData<Response<AvailableDateResponse>> = MutableLiveData()
+    val makeAppointment: MutableLiveData<Response<MakeAppointmentResponse>> = MutableLiveData()
 
     fun loadHospitals() {
         viewModelScope.launch {
@@ -58,20 +57,6 @@ class MyHealthCareViewModel(private val repository: MyHealthCareRepository) : Vi
         }
     }
 
-    fun getSingleAppointment(id : Int) {
-        viewModelScope.launch {
-            val response = repository.getSingleAppointment(id)
-            singleAppointment.value = response
-        }
-    }
-
-    fun getSingleFeedback(id : Int) {
-        viewModelScope.launch {
-            val response = repository.getSingleFeedback(id)
-            singleFeedback.value = response
-        }
-    }
-
     fun registerClient(registerClient: Client) {
         viewModelScope.launch {
             val response = repository.registration(registerClient)
@@ -90,6 +75,13 @@ class MyHealthCareViewModel(private val repository: MyHealthCareRepository) : Vi
         viewModelScope.launch {
             val response = repository.getMedicDates(medicId)
             medicDates.value = response
+        }
+    }
+
+    fun makeAppointment(appointment: MakeAppointment){
+        viewModelScope.launch {
+            val response =  repository.makeAppointment(appointment)
+            makeAppointment.value = response
         }
     }
 }

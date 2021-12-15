@@ -11,17 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.adapters.MyAppointmentsAdapter
 import com.example.myhealthcareapp.api.MyHealthCareViewModel
+import com.example.myhealthcareapp.cache.Cache
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.interfaces.OnItemClickListener
-import com.example.myhealthcareapp.models.response.Appointment
+import com.example.myhealthcareapp.models.response.ClientAppointmentResponse
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class MyAppointmentsFragment : BaseFragment(), OnItemClickListener {
-    private lateinit var appointments: MutableList<Appointment>
-    private lateinit var singleAppointment: Appointment
+    private lateinit var appointments: MutableList<ClientAppointmentResponse>
     private lateinit var adapter : MyAppointmentsAdapter
     private val viewModel by viewModel<MyHealthCareViewModel>()
 
@@ -31,8 +30,6 @@ class MyAppointmentsFragment : BaseFragment(), OnItemClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_my_appointments, container, false)
 
-        //TODO get the user id
-        viewModel.getAppointments(15)
         viewModel.myAppointments.observe(viewLifecycleOwner, { response ->
             if(response.isSuccessful){
                 Log.d("myAppointments", response.body().toString())
@@ -44,6 +41,7 @@ class MyAppointmentsFragment : BaseFragment(), OnItemClickListener {
             }
         })
 
+        viewModel.getAppointments(Cache.getClient().id)
 
         return view
     }
@@ -59,35 +57,21 @@ class MyAppointmentsFragment : BaseFragment(), OnItemClickListener {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.setHasFixedSize(true)
-
-        (mActivity as MainActivity).setProfileIconListener()
-
     }
 
     override fun onItemClick(position: Int) {
-        viewModel.getSingleAppointment(appointments[position].appointmentId)
+        val singleAppointment = appointments[position]
 
-        viewModel.singleAppointment.observe(viewLifecycleOwner, { response ->
-            if(response.isSuccessful){
-                Log.d("singleAppointment", response.body().toString())
-                singleAppointment = response.body()?.data!!
+        val summary = arrayOf(
+            "Hospital: " + singleAppointment.hospitalName,
+            "Department: " + singleAppointment.medicalDepartmentName,
+            "Medic: " + singleAppointment.medicName,
+            "Date & Time: " + singleAppointment.scheduleStartDate + ", " + singleAppointment.scheduleEndDate,
+        )
 
-                val summary = arrayOf(
-                    "Hospital: " + singleAppointment.hospitalName, //Hospital name,
-                    "Department: " + singleAppointment.medicalDepartmentName, //Department name,
-                    "Medic: " + singleAppointment.medicName, //Medic name
-                    "Date & Time: " + singleAppointment.scheduleStartDate + ", " + singleAppointment.scheduleEndDate, //Appointment date & time
-                )
-
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(resources.getString(R.string.summary))
-                    .setItems(summary) {_, _ ->}
-                    .show()
-            }
-            else {
-                Log.e("singleAppointment", response.errorBody().toString())
-            }
-        })
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.summary))
+            .setItems(summary) {_, _ ->}
+            .show()
     }
-
 }

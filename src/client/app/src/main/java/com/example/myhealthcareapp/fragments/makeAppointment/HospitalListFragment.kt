@@ -1,6 +1,5 @@
 package com.example.myhealthcareapp.fragments.makeAppointment
 
-import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater

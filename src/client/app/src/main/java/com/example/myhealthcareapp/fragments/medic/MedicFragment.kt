@@ -4,17 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
 import com.example.myhealthcareapp.adapters.MedicAppointmentAdapter
 import com.example.myhealthcareapp.fragments.BaseFragment
-import com.example.myhealthcareapp.models.response.Appointment
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.myhealthcareapp.models.response.ClientAppointmentResponse
 
 class MedicFragment : BaseFragment(){
-    private lateinit var appointments: MutableList<Appointment>
+    private lateinit var appointments: MutableList<ClientAppointmentResponse>
     private lateinit var adapter: MedicAppointmentAdapter
     private lateinit var recyclerView: RecyclerView
 
@@ -24,18 +22,18 @@ class MedicFragment : BaseFragment(){
     ): View? {
         val view = inflater.inflate(R.layout.fragment_medic, container, false)
 
-        appointments = generateDummyList(20)
-        recyclerView = view.findViewById(R.id.recycler_view)
-        adapter = MedicAppointmentAdapter(appointments)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.setHasFixedSize(true)
-
-        (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.upcoming_appointments)
-        (mActivity as MainActivity).bottomNavigation.visibility = View.GONE
-        (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
-        (mActivity as MainActivity).searchIcon.isVisible = false
-        (mActivity as MainActivity).profileIcon.isVisible = true
+//        appointments = generateDummyList(20)
+//        recyclerView = view.findViewById(R.id.recycler_view)
+//        adapter = MedicAppointmentAdapter(appointments)
+//        recyclerView.adapter = adapter
+//        recyclerView.layoutManager = LinearLayoutManager(context)
+//        recyclerView.setHasFixedSize(true)
+//
+//        (mActivity as MainActivity).topAppBar.title = (mActivity).getString(R.string.upcoming_appointments)
+//        (mActivity as MainActivity).bottomNavigation.visibility = View.GONE
+//        (mActivity as MainActivity).topAppBar.visibility = View.VISIBLE
+//        (mActivity as MainActivity).searchIcon.isVisible = false
+//        (mActivity as MainActivity).profileIcon.isVisible = true
 
         return view
     }
@@ -46,22 +44,5 @@ class MedicFragment : BaseFragment(){
             (mActivity as MainActivity).replaceFragment(MedicProfileFragment(), R.id.fragment_container, addToBackStack = true)
             true
         }
-    }
-
-    private fun generateDummyList(size: Int): MutableList<Appointment> {
-        val list : MutableList<Appointment> = mutableListOf()
-        for (i in 0 until size) {
-            val item = Appointment(i,"asfd",
-                "Policlinica",
-                "Neurology",
-                "Jonny",
-                "2021-12-21 16:30",
-                "2021-12-21 17:00",
-                "ok"
-            )
-            list += item
-        }
-
-        return list
     }
 }

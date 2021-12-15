@@ -20,20 +20,12 @@ class MyHealthCareRepository(private val instance: MyHealthCareInstance) {
         return instance.api.getMedics(departmentId)
     }
 
-    suspend fun getAppointments(id : Int) : Response<MyAppointmentsResponse> {
+    suspend fun getAppointments(id : Int) : Response<ClientAppointments> {
         return instance.api.getAppointments(id)
     }
 
-    suspend fun getFeedbacks(id : Int) : Response<FeedbackResponse> {
+    suspend fun getFeedbacks(id : Int) : Response<FeedBacksAppointmentResponse> {
         return instance.api.getFeedbacks(id)
-    }
-
-    suspend fun getSingleAppointment(id : Int) : Response<SingleAppointmentResponse> {
-        return instance.api.getSingleAppointment(id)
-    }
-
-    suspend fun getSingleFeedback(id : Int) : Response<SingleFeedbackResponse> {
-        return instance.api.getSingleFeedback(id)
     }
 
     suspend fun registration(registerClient: Client) : Response<RegisterResponse> {
@@ -46,5 +38,9 @@ class MyHealthCareRepository(private val instance: MyHealthCareInstance) {
 
     suspend fun getMedicDates(medicId: String) : Response<AvailableDateResponse> {
         return instance.api.getMedicDates(medicId)
+    }
+
+    suspend fun makeAppointment(appointment: MakeAppointment) : Response<MakeAppointmentResponse> {
+        return instance.api.makeAppointment(appointment)
     }
 }
