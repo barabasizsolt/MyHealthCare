@@ -51,4 +51,15 @@ interface MyHealthCareApi {
     suspend fun makeAppointment(
         @Body appointment: MakeAppointment
     ) : Response<MakeAppointmentResponse>
+
+    @GET("/api/medics/{email}/{password}")
+    suspend fun medicLogin(
+        @Path("email") email: String,
+        @Path("password") password: String
+    ) : Response<MedicLoginResponse>
+
+    @GET("/api/appointments/medic/{id}")
+    suspend fun getMedicAppointments(
+        @Path("id") id: Int
+    ) : Response<ClientAppointments>
 }

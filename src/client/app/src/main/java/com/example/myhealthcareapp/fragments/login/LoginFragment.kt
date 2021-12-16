@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.*
 import com.example.myhealthcareapp.MainActivity
 import com.example.myhealthcareapp.R
+import com.example.myhealthcareapp.api.MyHealthCareViewModel
+import com.example.myhealthcareapp.cache.Cache
 import com.example.myhealthcareapp.fragments.BaseFragment
 import com.example.myhealthcareapp.fragments.forgotPassword.ForgotPasswordFragment
 import com.example.myhealthcareapp.fragments.makeAppointment.HospitalListFragment
@@ -14,6 +16,7 @@ import com.example.myhealthcareapp.fragments.medic.MedicFragment
 import com.example.myhealthcareapp.fragments.register.RegisterFragment
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class LoginFragment : BaseFragment() {
     private lateinit var emailTextView : TextView
@@ -25,6 +28,7 @@ class LoginFragment : BaseFragment() {
     private lateinit var clickHereTextView : TextView
     private lateinit var progressBar : ProgressBar
     private lateinit var medicCheckBox: CheckBox
+    private val viewModel by sharedViewModel<MyHealthCareViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +45,14 @@ class LoginFragment : BaseFragment() {
         clickHereTextView = view.findViewById(R.id.click_here_text_view)
         progressBar = view.findViewById(R.id.progress_bar)
         medicCheckBox = view.findViewById(R.id.medic_checkbox)
+
+        viewModel.medicLogin.observe(viewLifecycleOwner, { response ->
+            if(response.isSuccessful){
+                response.body()?.data?.let { Cache.setMedic(it) }
+                medicCheckBox.isChecked = false
+                (mActivity as MainActivity).replaceFragment(MedicFragment(), R.id.fragment_container)
+            }
+        })
 
         return view
     }
@@ -72,7 +84,7 @@ class LoginFragment : BaseFragment() {
                 }
                 else {
                     //Medic Login
-                    (mActivity as MainActivity).replaceFragment(MedicFragment(), R.id.fragment_container)
+                    viewModel.medicLogin(emailTextView.text.toString(), passwordTextView.text.toString())
                 }
             }
         }
