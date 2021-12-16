@@ -43,4 +43,12 @@ class MyHealthCareRepository(private val instance: MyHealthCareInstance) {
     suspend fun makeAppointment(appointment: MakeAppointment) : Response<MakeAppointmentResponse> {
         return instance.api.makeAppointment(appointment)
     }
+
+    suspend fun medicLogin(email: String, password: String) : Response<MedicLoginResponse> {
+        return instance.api.medicLogin(email, password)
+    }
+
+    suspend fun getMedicAppointment(id: Int) : Response<ClientAppointments> {
+        return instance.api.getMedicAppointments(id)
+    }
 }

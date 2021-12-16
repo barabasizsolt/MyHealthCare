@@ -1,28 +1,39 @@
 package com.example.myhealthcareapp.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myhealthcareapp.R
-import com.example.myhealthcareapp.models.response.MakeAppointment
+import com.example.myhealthcareapp.models.response.ClientAppointmentResponse
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.medic_appointment_element.view.*
+import com.example.myhealthcareapp.cache.Cache
 
-class MedicAppointmentAdapter(private var appointmentList : MutableList<MakeAppointment>) : RecyclerView.Adapter<MedicAppointmentAdapter.MedicAppointmentViewHolder>() {
+class MedicAppointmentAdapter(private var appointmentList : MutableList<ClientAppointmentResponse>) : RecyclerView.Adapter<MedicAppointmentAdapter.MedicAppointmentViewHolder>() {
 
     inner class MedicAppointmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val patientName : TextView = itemView.patient_name
         val medicalDepartmentName : TextView = itemView.department_name
-        val appointmentStartDate : TextView = itemView.appointment_start_date
+        val appointmentDate : TextView = itemView.appointment_start_date
         private val detailsButton : Button = itemView.details_button
 
         init {
             detailsButton.setOnClickListener {
-                //TODO: pop up dialog with appointment info
-                Toast.makeText(itemView.context, "Item clicked", Toast.LENGTH_SHORT).show()
+                val summary = arrayOf(
+                    "Patient: ${patientName.text}",
+                    "Department: ${medicalDepartmentName.text}",
+                    "Medic: " + Cache.getMedic().name,
+                    "Date & Time: ${appointmentDate.text}",
+                )
+
+                MaterialAlertDialogBuilder(itemView.context)
+                    .setTitle("Appointment details")
+                    .setItems(summary) {_, _ ->}
+                    .show()
             }
         }
     }
@@ -32,11 +43,12 @@ class MedicAppointmentAdapter(private var appointmentList : MutableList<MakeAppo
         return MedicAppointmentViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MedicAppointmentViewHolder, position: Int) {
         val itemsViewModel = appointmentList[position]
-        holder.patientName.text = "Samuel John Doe"
-        holder.medicalDepartmentName.text = "Cardiology"
-        holder.appointmentStartDate.text = "2021-12-21 16:30"
+        holder.patientName.text = itemsViewModel.clientName
+        holder.medicalDepartmentName.text = itemsViewModel.medicalDepartmentName
+        holder.appointmentDate.text = itemsViewModel.scheduleStartDate + " - " + itemsViewModel.scheduleEndDate
     }
 
     override fun getItemCount(): Int = appointmentList.size
