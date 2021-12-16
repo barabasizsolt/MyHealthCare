@@ -86,28 +86,6 @@ class BookAppointmentFragment : BaseFragment(),
         appointmentTime = view.findViewById(R.id.appointment_time)
         appointmentTimeLayout = view.findViewById(R.id.appointment_time_layout)
 
-//        //Dummy Data for available days
-//        for(i in 10 until 20) {
-//            val date = "2021-12-$i"
-//            formatter.parse(date)
-//            val cal = formatter.calendar
-//            val customDate = CustomDate(cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DATE])
-//            availableDays.add(customDate)
-//        }
-//        for(i in 2 until 25) {
-//            val date = "2022-01-$i"
-//            formatter.parse(date)
-//            val cal = formatter.calendar
-//            val customDate = CustomDate(cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DATE])
-//            availableDays.add(customDate)
-//        }
-//
-//        //Dummy data for available hours
-//        for(i in 10 until 20){
-//            val hour = "12:30 - 14:$i"
-//            availableHours.add(hour)
-//        }
-
         viewModel.medics.observe(viewLifecycleOwner, { response ->
             if(response.isSuccessful){
                 medics = response.body()?.data as MutableList
